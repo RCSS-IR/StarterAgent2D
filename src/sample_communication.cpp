@@ -37,7 +37,6 @@
 
 #include "strategy.h"
 
-#include <rcsc/formation/formation.h>
 #include <rcsc/player/player_agent.h>
 #include <rcsc/player/intercept_table.h>
 #include <rcsc/player/say_message_builder.h>
