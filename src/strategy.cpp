@@ -35,11 +35,6 @@
 
 #include "strategy.h"
 
-//#ifndef USE_GENERIC_FACTORY
-
-
-#include <rcsc/formation/formation_static.h>
-
 #include <rcsc/player/intercept_table.h>
 #include <rcsc/player/world_model.h>
 
@@ -65,14 +60,6 @@ Strategy::Strategy()
       M_current_situation( Normal_Situation ),
       M_positions( 11 )
 {
-#ifndef USE_GENERIC_FACTORY
-
-    //
-    // formations
-    //
-
-    M_formation_factory[FormationStatic::name()] = &FormationStatic::create;
-#endif
 
 }
 

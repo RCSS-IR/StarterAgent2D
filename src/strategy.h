@@ -32,7 +32,6 @@
 #ifndef STRATEGY_H
 #define STRATEGY_H
 
-#include <rcsc/formation/formation.h>
 #include <rcsc/geom/vector_2d.h>
 
 #include <boost/shared_ptr.hpp>
@@ -40,7 +39,6 @@
 #include <vector>
 #include <string>
 
-// # define USE_GENERIC_FACTORY 1
 
 namespace rcsc {
 class CmdLineParser;
@@ -62,15 +60,6 @@ class Strategy {
 public:
 
 private:
-    //
-    // factories
-    //
-#ifndef USE_GENERIC_FACTORY
-    typedef std::map< std::string, rcsc::Formation::Creator > FormationFactory;
-
-    FormationFactory M_formation_factory;
-#endif
-
     int M_goalie_unum;
 
 

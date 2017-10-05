@@ -58,7 +58,6 @@
 #include <rcsc/action/neck_turn_to_ball_or_scan.h>
 #include <rcsc/action/view_synch.h>
 
-#include <rcsc/formation/formation.h>
 #include <rcsc/action/kick_table.h>
 #include <rcsc/player/intercept_table.h>
 #include <rcsc/player/say_message_builder.h>

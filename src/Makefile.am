@@ -19,11 +19,9 @@ PLAYERSOURCES = \
 	bhv_their_goal_kick_move.cpp \
 	bhv_penalty_kick.cpp \
 	neck_goalie_turn_neck.cpp \
-	neck_offensive_intercept_neck.cpp \
 	view_tactical.cpp \
 	intention_receive.cpp \
 	intention_wait_after_set_play_kick.cpp \
-	soccer_role.cpp \
 	sample_communication.cpp \
 	keepaway_communication.cpp \
 	sample_player.cpp \
@@ -49,11 +47,9 @@ PLAYERHEADERS = \
 	bhv_their_goal_kick_move.h \
 	bhv_penalty_kick.h \
 	neck_goalie_turn_neck.h \
-	neck_offensive_intercept_neck.h \
 	view_tactical.h \
 	intention_receive.h \
 	intention_wait_after_set_play_kick.h \
-	soccer_role.h \
 	communication.h \
 	sample_communication.h \
 	keepaway_communication.h \

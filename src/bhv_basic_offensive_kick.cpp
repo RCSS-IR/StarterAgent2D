@@ -31,9 +31,7 @@
 #include "bhv_basic_offensive_kick.h"
 
 #include <rcsc/action/body_advance_ball.h>
-#include <rcsc/action/body_dribble.h>
 #include <rcsc/action/body_hold_ball.h>
-#include <rcsc/action/body_pass.h>
 #include <rcsc/action/neck_scan_field.h>
 #include <rcsc/action/neck_turn_to_low_conf_teammate.h>
 
