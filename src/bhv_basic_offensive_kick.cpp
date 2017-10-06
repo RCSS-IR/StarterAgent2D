@@ -34,14 +34,15 @@
 #include <rcsc/action/body_hold_ball.h>
 #include <rcsc/action/neck_scan_field.h>
 #include <rcsc/action/neck_turn_to_low_conf_teammate.h>
-
+#include <rcsc/action/body_smart_kick.h>
 #include <rcsc/player/player_agent.h>
 #include <rcsc/player/debug_client.h>
 
 #include <rcsc/common/logger.h>
 #include <rcsc/common/server_param.h>
 #include <rcsc/geom/sector_2d.h>
-
+#include <vector>
+using namespace std;
 using namespace rcsc;
 
 /*-------------------------------------------------------------------*/
@@ -55,9 +56,11 @@ Bhv_BasicOffensiveKick::execute( PlayerAgent * agent )
                   __FILE__": Bhv_BasicOffensiveKick" );
 
     const WorldModel & wm = agent->world();
+
     if(shoot(agent)){
     	return true;
     }
+
     if(pass_to_forward(agent)){
     	return true;
     }
@@ -82,6 +85,7 @@ Bhv_BasicOffensiveKick::execute( PlayerAgent * agent )
     if(dribble(agent)){
     	return true;
     }
+
     if ( nearest_opp_dist > 2.5 )
     {
         dlog.addText( Logger::TEAM,
@@ -104,13 +108,13 @@ Bhv_BasicOffensiveKick::execute( PlayerAgent * agent )
 
 }
 
-#include <rcsc/action/body_smart_kick.h>
+
 bool Bhv_BasicOffensiveKick::shoot( rcsc::PlayerAgent * agent ){
 	const WorldModel & wm = agent->world();
 	Vector2D ball_pos = wm.ball().pos();
 	Vector2D center_goal = Vector2D(52.5,0);
 	if(ball_pos.dist(center_goal) > 25)
-		return false;
+            return false;
 	Vector2D left_goal = Vector2D(52.5,6);
 	Vector2D right_goal = Vector2D(52.5,-6);
 
@@ -122,8 +126,7 @@ bool Bhv_BasicOffensiveKick::shoot( rcsc::PlayerAgent * agent ){
 	agent->setNeckAction( new Neck_ScanField() );
 	return true;
 }
-#include <vector>
-using namespace std;
+
 bool Bhv_BasicOffensiveKick::pass_to_forward(PlayerAgent * agent){
 	const WorldModel & wm = agent->world();
 	vector<Vector2D> targets;
