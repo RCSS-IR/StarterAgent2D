@@ -23,7 +23,7 @@ DIR=`dirname $0`
 
 player="${DIR}/sample_player"
 coach="${DIR}/sample_coach"
-teamname="HELIOS_base"
+teamname="std_base"
 host="localhost"
 port=6000
 coach_port=""
@@ -31,7 +31,6 @@ debug_server_host=""
 debug_server_port=""
 
 player_conf="${DIR}/player.conf"
-config_dir="${DIR}/formations-dt"
 
 coach_conf="${DIR}/coach.conf"
 team_graphic="--use_team_graphic off"
@@ -144,15 +143,6 @@ do
 
     -C|--without-coach)
       usecoach="false"
-      ;;
-
-    -f|--formation)
-      if [ $# -lt 2 ]; then
-        usage
-        exit 1
-      fi
-      config_dir="${2}"
-      shift 1
       ;;
 
     --team-graphic)
@@ -280,7 +270,7 @@ if [ X"${debug_server_port}" = X'' ]; then
   debug_server_port=`expr ${port} + 32`
 fi
 
-opt="--player-config ${player_conf} --config_dir ${config_dir}"
+opt="--player-config ${player_conf}"
 opt="${opt} -h ${host} -p ${port} -t ${teamname}"
 opt="${opt} ${fullstateopt}"
 opt="${opt} --debug_server_host ${debug_server_host}"
