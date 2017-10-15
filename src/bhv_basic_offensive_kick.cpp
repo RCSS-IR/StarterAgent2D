@@ -35,14 +35,16 @@
 #include <rcsc/action/neck_scan_field.h>
 #include <rcsc/action/neck_turn_to_low_conf_teammate.h>
 #include <rcsc/action/body_smart_kick.h>
+
 #include <rcsc/player/player_agent.h>
 #include <rcsc/player/debug_client.h>
 
 #include <rcsc/common/logger.h>
 #include <rcsc/common/server_param.h>
+
 #include <rcsc/geom/sector_2d.h>
+
 #include <vector>
-using namespace std;
 using namespace rcsc;
 
 /*-------------------------------------------------------------------*/
@@ -58,10 +60,6 @@ Bhv_BasicOffensiveKick::execute( PlayerAgent * agent )
     const WorldModel & wm = agent->world();
 
     if(shoot(agent)){
-    	return true;
-    }
-
-    if(pass_to_forward(agent)){
     	return true;
     }
 
@@ -82,6 +80,8 @@ Bhv_BasicOffensiveKick::execute( PlayerAgent * agent )
     		return true;
     }
 
+
+
     if(dribble(agent)){
     	return true;
     }
@@ -96,18 +96,8 @@ Bhv_BasicOffensiveKick::execute( PlayerAgent * agent )
         return true;
     }
 
-    {
-        dlog.addText( Logger::TEAM,
-                      __FILE__": clear" );
-        agent->debugClient().addMessage( "OffKickAdvance" );
-        Body_AdvanceBall().execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
-    }
-
     return true;
-
 }
-
 
 bool Bhv_BasicOffensiveKick::shoot( rcsc::PlayerAgent * agent ){
 	const WorldModel & wm = agent->world();
@@ -127,35 +117,6 @@ bool Bhv_BasicOffensiveKick::shoot( rcsc::PlayerAgent * agent ){
 	return true;
 }
 
-bool Bhv_BasicOffensiveKick::pass_to_forward(PlayerAgent * agent){
-	const WorldModel & wm = agent->world();
-	vector<Vector2D> targets;
-	Vector2D ball_pos = wm.ball().pos();
-	for(int u = 1;u<=11;u++){
-		const AbstractPlayerObject * tm = wm.ourPlayer(u);
-		if(tm==NULL || tm->unum() < 1 || tm->unum() == wm.self().unum() )
-			continue;
-		Vector2D tm_pos = tm->pos();
-		if(tm->pos().dist(ball_pos) > 30)
-			continue;
-		Sector2D pass = Sector2D(ball_pos,1,tm_pos.dist(ball_pos)+3,(tm_pos - ball_pos).th() - 15,(tm_pos - ball_pos).th() + 15);
-		if(!wm.existOpponentIn(pass,5,true)){
-			targets.push_back(tm_pos);
-		}
-	}
-	if(targets.size() == 0)
-		return false;
-	Vector2D best_target = targets[0];
-	for(int i=1;i<targets.size();i++){
-		if(targets[i].x > best_target.x)
-			best_target = targets[i];
-	}
-	if(best_target.x < ball_pos.x)
-		return false;
-	Body_SmartKick(best_target,3,2.9,3).execute(agent);
-	agent->setNeckAction( new Neck_ScanField() );
-	return true;
-}
 bool Bhv_BasicOffensiveKick::pass(PlayerAgent * agent){
 	const WorldModel & wm = agent->world();
 	vector<Vector2D> targets;
