@@ -30,7 +30,7 @@
 
 #include "bhv_set_play_goal_kick.h"
 #include "bhv_basic_offensive_kick.h"
-#include "strategy.h"
+#include "bhv_basic_move.h"
 
 #include "bhv_set_play.h"
 #include "bhv_prepare_set_play_kick.h"
@@ -364,7 +364,7 @@ Bhv_SetPlayGoalKick::doMove( PlayerAgent * agent )
     double dist_thr = wm.ball().distFromSelf() * 0.07;
     if ( dist_thr < 1.0 ) dist_thr = 1.0;
 
-    Vector2D target_point = Strategy::i().getPosition( wm.self().unum() );
+    Vector2D target_point = Bhv_BasicMove().getPosition( wm, wm.self().unum() );
     target_point.y += wm.ball().pos().y * 0.5;
     if ( target_point.absY() > ServerParam::i().pitchHalfWidth() - 1.0 )
     {

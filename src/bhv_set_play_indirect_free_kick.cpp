@@ -30,7 +30,7 @@
 
 #include "bhv_set_play_indirect_free_kick.h"
 
-#include "strategy.h"
+#include "bhv_basic_move.h"
 #include "bhv_basic_offensive_kick.h"
 #include "bhv_set_play.h"
 #include "bhv_prepare_set_play_kick.h"
@@ -483,7 +483,7 @@ Bhv_SetPlayIndirectFreeKick::doOffenseMove( PlayerAgent * agent )
 {
     const WorldModel & wm = agent->world();
 
-    Vector2D target_point = Strategy::i().getPosition( wm.self().unum() );
+    Vector2D target_point = Bhv_BasicMove().getPosition( wm, wm.self().unum() );
     target_point.x = std::min( wm.offsideLineX() - 1.0, target_point.x );
 
     double nearest_dist = 1000.0;
@@ -544,7 +544,7 @@ Bhv_SetPlayIndirectFreeKick::doDefenseMove( PlayerAgent * agent )
     const ServerParam & SP = ServerParam::i();
     const WorldModel & wm = agent->world();
 
-    Vector2D target_point = Strategy::i().getPosition( wm.self().unum() );
+    Vector2D target_point = Bhv_BasicMove().getPosition( wm, wm.self().unum() );
     Vector2D adjusted_point = get_avoid_circle_point( wm, target_point );
 
     dlog.addText( Logger::TEAM,

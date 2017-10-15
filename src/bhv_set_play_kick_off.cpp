@@ -30,7 +30,7 @@
 
 #include "bhv_set_play_kick_off.h"
 
-#include "strategy.h"
+#include "bhv_basic_move.h"
 
 #include "bhv_go_to_static_ball.h"
 #include "bhv_set_play.h"
@@ -265,7 +265,7 @@ Bhv_SetPlayKickOff::doMove( PlayerAgent * agent )
 {
     const WorldModel & wm = agent->world();
 
-    Vector2D target_point = Strategy::i().getPosition( wm.self().unum() );
+    Vector2D target_point = Bhv_BasicMove().getPosition( wm, wm.self().unum() );
     target_point.x = std::min( -0.5, target_point.x );
 
     double dash_power = Bhv_SetPlay::get_set_play_dash_power( agent );

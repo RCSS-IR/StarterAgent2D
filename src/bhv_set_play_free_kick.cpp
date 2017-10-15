@@ -30,7 +30,7 @@
 
 #include "bhv_set_play_free_kick.h"
 
-#include "strategy.h"
+#include "bhv_basic_move.h"
 
 #include "bhv_set_play.h"
 #include "bhv_prepare_set_play_kick.h"
@@ -324,7 +324,7 @@ Bhv_SetPlayFreeKick::doMove( PlayerAgent * agent )
     dlog.addText( Logger::TEAM,
                   __FILE__": (doMove)" );
 
-    Vector2D target_point = Strategy::i().getPosition( wm.self().unum() );
+    Vector2D target_point = Bhv_BasicMove().getPosition( wm, wm.self().unum() );
 
     if ( wm.setplayCount() > 0
          && wm.self().stamina() > ServerParam::i().staminaMax() * 0.9 )

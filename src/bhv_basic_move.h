@@ -29,6 +29,7 @@
 
 #include <rcsc/geom/vector_2d.h>
 #include <rcsc/player/soccer_action.h>
+#include <rcsc/player/player_agent.h>
 
 class Bhv_BasicMove
     : public rcsc::SoccerBehavior {
@@ -37,6 +38,9 @@ public:
       { }
 
     bool execute( rcsc::PlayerAgent * agent );
+    rcsc::Vector2D getPosition(const rcsc::WorldModel & wm, int unum);
+    double get_normal_dash_power( const rcsc::WorldModel & wm );
+
 
 private:
     double getDashPower( const rcsc::PlayerAgent * agent );

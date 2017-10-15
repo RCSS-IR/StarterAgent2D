@@ -119,7 +119,7 @@ bool Bhv_BasicOffensiveKick::shoot( rcsc::PlayerAgent * agent ){
 
 bool Bhv_BasicOffensiveKick::pass(PlayerAgent * agent){
 	const WorldModel & wm = agent->world();
-	vector<Vector2D> targets;
+	std::vector<Vector2D> targets;
 	Vector2D ball_pos = wm.ball().pos();
 	for(int u = 1;u<=11;u++){
 		const AbstractPlayerObject * tm = wm.ourPlayer(u);

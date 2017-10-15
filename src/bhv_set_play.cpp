@@ -30,7 +30,7 @@
 
 #include "bhv_set_play.h"
 
-#include "strategy.h"
+#include "bhv_basic_move.h"
 
 #include "bhv_goalie_free_kick.h"
 #include "bhv_set_play_free_kick.h"
@@ -79,7 +79,7 @@ Bhv_SetPlay::execute( PlayerAgent * agent )
     const WorldModel & wm = agent->world();
 
 #ifdef DEBUG_PRINT
-    Vector2D home_pos = Strategy::i().getPosition( wm.self().unum() );
+    Vector2D home_pos = Bhv_BasicMove().getPosition( wm, wm.self().unum() );
     if ( ! home_pos.isValid() )
     {
         std::cerr << agent->config().teamName() << ": "
@@ -199,7 +199,7 @@ Bhv_SetPlay::get_set_play_dash_power( const PlayerAgent * agent )
 
     if ( ! wm.gameMode().isOurSetPlay( wm.ourSide() ) )
     {
-        Vector2D target_point = Strategy::i().getPosition( wm.self().unum() );
+        Vector2D target_point = Bhv_BasicMove().getPosition( wm, wm.self().unum() );
         if ( target_point.x > wm.self().pos().x )
         {
             if ( wm.ball().pos().x < -30.0
@@ -447,7 +447,7 @@ Bhv_SetPlay::is_kicker( const PlayerAgent * agent )
     {
         if ( unum == wm.ourGoalieUnum() ) continue;
 
-        Vector2D home_pos = Strategy::i().getPosition( unum );
+        Vector2D home_pos = Bhv_BasicMove().getPosition( wm, unum );
         if ( ! home_pos.isValid() ) continue;
 
         double d2 = home_pos.dist2( wm.ball().pos() );
@@ -612,7 +612,7 @@ Bhv_SetPlay::doBasicTheirSetPlayMove( PlayerAgent * agent )
 {
     const WorldModel & wm = agent->world();
 
-    Vector2D target_point = Strategy::i().getPosition( wm.self().unum() );
+    Vector2D target_point = Bhv_BasicMove().getPosition( wm, wm.self().unum() );
 
     dlog.addText( Logger::TEAM,
                   __FILE__": their set play. HomePosition=(%.2f, %.2f)",

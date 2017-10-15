@@ -30,7 +30,7 @@
 
 #include "bhv_their_goal_kick_move.h"
 
-#include "strategy.h"
+#include "bhv_basic_move.h"
 
 #include "bhv_set_play.h"
 
@@ -155,7 +155,7 @@ Bhv_TheirGoalKickMove::doNormal( PlayerAgent * agent )
     const WorldModel & wm = agent->world();
     double dash_power = Bhv_SetPlay::get_set_play_dash_power( agent );
 
-    Vector2D target_point = Strategy::i().getPosition( wm.self().unum() );
+    Vector2D target_point = Bhv_BasicMove().getPosition( wm, wm.self().unum() );
 
     // attract to ball
     if ( target_point.x > 25.0

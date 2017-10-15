@@ -30,7 +30,7 @@
 
 #include "bhv_set_play_kick_in.h"
 #include "bhv_basic_offensive_kick.h"
-#include "strategy.h"
+#include "bhv_basic_move.h"
 
 #include "bhv_set_play.h"
 #include "bhv_go_to_static_ball.h"
@@ -322,8 +322,7 @@ Bhv_SetPlayKickIn::doMove( PlayerAgent * agent )
 {
     const WorldModel & wm = agent->world();
 
-    Vector2D target_point = Strategy::i().getPosition( wm.self().unum() );
-
+    Vector2D target_point = Bhv_BasicMove().getPosition( wm, wm.self().unum() );
     bool avoid_opponent = false;
     if ( wm.self().stamina() > ServerParam::i().staminaMax() * 0.9 )
     {

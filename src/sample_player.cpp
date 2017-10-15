@@ -30,7 +30,6 @@
 
 #include "sample_player.h"
 
-#include "strategy.h"
 #include "bhv_basic_offensive_kick.h"
 #include "bhv_basic_move.h"
 
@@ -162,9 +161,6 @@ SamplePlayer::initImpl( CmdLineParser & cmd_parser )
 {
 	bool result = PlayerAgent::initImpl( cmd_parser );
 
-	// read additional options
-	result &= Strategy::instance().init( cmd_parser );
-
 	rcsc::ParamMap my_params( "Additional options" );
 #if 0
 	std::string param_file_path = "params";
@@ -210,11 +206,6 @@ SamplePlayer::initImpl( CmdLineParser & cmd_parser )
 void
 SamplePlayer::actionImpl()
 {
-	//
-	// update strategy and analyzer
-	//
-	Strategy::instance().update( world() );
-
 
 	//
 	// special situations (tackle, objects accuracy, intention...)
@@ -441,7 +432,19 @@ SamplePlayer::doPreprocess()
 	{
 		dlog.addText( Logger::TEAM,
 				__FILE__": before_kick_off" );
-		Vector2D move_point =  Strategy::i().getPosition( wm.self().unum() );
+		std::vector<Vector2D> KickOffPosition(12);
+		KickOffPosition[1] = Vector2D(-52,0);
+		KickOffPosition[2] = Vector2D(-30,-10);
+		KickOffPosition[3] = Vector2D(-30,10);
+		KickOffPosition[4] = Vector2D(-30,-20);
+		KickOffPosition[5] = Vector2D(-30,20);
+		KickOffPosition[6] = Vector2D(-15,0);
+		KickOffPosition[7] = Vector2D(-15,-15);
+		KickOffPosition[8] = Vector2D(-15,15);
+		KickOffPosition[9] = Vector2D(-5,-20);
+		KickOffPosition[10] = Vector2D(-5,20);
+		KickOffPosition[11] = Vector2D(-11,0);
+		Vector2D move_point =  KickOffPosition.at( wm.self().unum() );
 		Bhv_CustomBeforeKickOff( move_point ).execute( this );
 		this->setViewAction( new View_Tactical() );
 		return true;

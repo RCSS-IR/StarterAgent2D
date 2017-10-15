@@ -30,8 +30,6 @@
 
 #include "bhv_penalty_kick.h"
 
-#include "strategy.h"
-
 #include "bhv_goalie_chase_ball.h"
 #include "bhv_goalie_basic_move.h"
 #include "bhv_go_to_static_ball.h"

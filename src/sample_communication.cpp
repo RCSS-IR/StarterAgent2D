@@ -35,7 +35,7 @@
 
 #include "sample_communication.h"
 
-#include "strategy.h"
+#include "bhv_basic_move.h"
 
 #include <rcsc/player/player_agent.h>
 #include <rcsc/player/intercept_table.h>
@@ -281,9 +281,7 @@ SampleCommunication::updateCurrentSender( const PlayerAgent * agent )
         //
         // exclude goalie
         //
-        const int goalie_unum = ( wm.ourGoalieUnum() != Unum_Unknown
-                                  ? wm.ourGoalieUnum()
-                                  : Strategy::i().goalieUnum() );
+        const int goalie_unum = 1;
 
         for ( int unum = 1; unum <= 11; ++unum )
         {
