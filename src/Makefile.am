@@ -25,7 +25,6 @@ PLAYERSOURCES = \
 	sample_communication.cpp \
 	keepaway_communication.cpp \
 	sample_player.cpp \
-	strategy.cpp \
 	main_player.cpp
 
 PLAYERHEADERS = \
@@ -53,8 +52,7 @@ PLAYERHEADERS = \
 	communication.h \
 	sample_communication.h \
 	keepaway_communication.h \
-	sample_player.h \
-	strategy.h
+	sample_player.h
 
 
 COACHSOURCES = \
