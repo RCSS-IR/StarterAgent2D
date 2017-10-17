@@ -58,13 +58,13 @@ Bhv_GoalieFreeKick::execute( rcsc::PlayerAgent * agent )
     static int s_second_wait_count = 0;
 
     rcsc::dlog.addText( rcsc::Logger::TEAM,
-                        __FILE__": Bhf_GoalieFreeKick" );
+    __FILE__": Bhf_GoalieFreeKick" );
     if ( agent->world().gameMode().type() != rcsc::GameMode::GoalieCatch_
-         || agent->world().gameMode().side() != agent->world().ourSide()
-         || ! agent->world().self().isKickable() )
+    || agent->world().gameMode().side() != agent->world().ourSide()
+    || ! agent->world().self().isKickable() )
     {
         rcsc::dlog.addText( rcsc::Logger::TEAM,
-                            __FILE__": Bhv_GoalieFreeKick. Not a goalie catch mode" );
+        __FILE__": Bhv_GoalieFreeKick. Not a goalie catch mode" );
 
         Bhv_GoalieBasicMove().execute( agent );
         return true;
@@ -72,8 +72,8 @@ Bhv_GoalieFreeKick::execute( rcsc::PlayerAgent * agent )
 
 
     const long time_diff
-        = agent->world().time().cycle()
-        - agent->effector().getCatchTime().cycle();
+    = agent->world().time().cycle()
+    - agent->effector().getCatchTime().cycle();
     //- M_catch_time.cycle();
 
     // reset flags & wait
@@ -92,7 +92,7 @@ Bhv_GoalieFreeKick::execute( rcsc::PlayerAgent * agent )
     {
         //rcsc::Vector2D move_target( rcsc::ServerParam::i().ourPenaltyAreaLine() - 0.8, 0.0 );
         rcsc::Vector2D move_target( rcsc::ServerParam::i().ourPenaltyAreaLineX() - 1.5,
-                                    agent->world().ball().pos().y > 0.0 ? -13.0 : 13.0 );
+        agent->world().ball().pos().y > 0.0 ? -13.0 : 13.0 );
         //rcsc::Vector2D move_target( -45.0, 0.0 );
         s_first_move = true;
         s_second_move = false;
@@ -105,15 +105,15 @@ Bhv_GoalieFreeKick::execute( rcsc::PlayerAgent * agent )
     // after first move
     // check stamina recovery or wait teammate
     rcsc::Rect2D our_pen( rcsc::Vector2D( -52.5, -40.0 ),
-                          rcsc::Vector2D( -36.0, 40.0 ) );
+    rcsc::Vector2D( -36.0, 40.0 ) );
     if ( time_diff < 50
-         || agent->world().setplayCount() < 3
-         || ( time_diff < rcsc::ServerParam::i().dropBallTime() - 15
-              && ( agent->world().self().stamina() < rcsc::ServerParam::i().staminaMax() * 0.9
-                   || agent->world().existTeammateIn( our_pen, 20, true )
-                   )
-              )
-         )
+    || agent->world().setplayCount() < 3
+    || ( time_diff < rcsc::ServerParam::i().dropBallTime() - 15
+    && ( agent->world().self().stamina() < rcsc::ServerParam::i().staminaMax() * 0.9
+    || agent->world().existTeammateIn( our_pen, 20, true )
+    )
+    )
+    )
     {
         doWait( agent );
         return true;
@@ -135,7 +135,7 @@ Bhv_GoalieFreeKick::execute( rcsc::PlayerAgent * agent )
     // after second move
     // wait see info
     if ( s_second_wait_count < 5
-         || agent->world().seeTime() != agent->world().time() )
+    || agent->world().seeTime() != agent->world().time() )
     {
         doWait( agent );
         return true;
@@ -168,15 +168,15 @@ Bhv_GoalieFreeKick::getKickPoint( const rcsc::PlayerAgent * agent )
     candidates.push_back( std::make_pair( rcsc::Vector2D( base_x, 0.0 ), 0.0 ) );
 
     const rcsc::PlayerPtrCont::const_iterator opps_end
-        = agent->world().opponentsFromSelf().end();
+    = agent->world().opponentsFromSelf().end();
     for ( rcsc::PlayerPtrCont::const_iterator o
-              = agent->world().opponentsFromSelf().begin();
-          o != opps_end;
-          ++o )
+    = agent->world().opponentsFromSelf().begin();
+    o != opps_end;
+    ++o )
     {
         for ( std::vector< std::pair< rcsc::Vector2D, double > >::iterator it = candidates.begin();
-              it != candidates.end();
-              ++it )
+        it != candidates.end();
+        ++it )
         {
             it->second += 1.0 / (*o)->pos().dist2( it->first );
         }
@@ -185,8 +185,8 @@ Bhv_GoalieFreeKick::getKickPoint( const rcsc::PlayerAgent * agent )
     rcsc::Vector2D best_pos = candidates.front().first;
     double min_cong = 10000.0;
     for ( std::vector< std::pair< rcsc::Vector2D, double > >::iterator it = candidates.begin();
-          it != candidates.end();
-          ++it )
+    it != candidates.end();
+    ++it )
     {
         if ( it->second < min_cong )
         {
@@ -205,9 +205,9 @@ Bhv_GoalieFreeKick::getKickPoint( const rcsc::PlayerAgent * agent )
 void
 Bhv_GoalieFreeKick::doKick( rcsc::PlayerAgent * agent )
 {
-	if(Bhv_BasicOffensiveKick().pass(agent)){
-	    	return;
-	    }
+    if(Bhv_BasicOffensiveKick().pass(agent)){
+        return;
+    }
     rcsc::Body_ClearBall().execute( agent );
     agent->setNeckAction( new rcsc::Neck_ScanField() );
 }
@@ -223,12 +223,12 @@ Bhv_GoalieFreeKick::doWait( rcsc::PlayerAgent * agent )
     rcsc::Vector2D face_target( 0.0, 0.0 );
 
     if ( wm.self().pos().x > rcsc::ServerParam::i().ourPenaltyAreaLineX()
-         - rcsc::ServerParam::i().ballSize()
-         - wm.self().playerType().playerSize()
-         - 0.5 )
+    - rcsc::ServerParam::i().ballSize()
+    - wm.self().playerType().playerSize()
+    - 0.5 )
     {
         face_target.assign( rcsc::ServerParam::i().ourPenaltyAreaLineX() - 1.0,
-                            0.0 );
+        0.0 );
     }
 
     rcsc::Body_TurnToPoint( face_target ).execute( agent );

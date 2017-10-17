@@ -258,13 +258,6 @@ Bhv_SetPlayIndirectFreeKick::doKickWait( PlayerAgent * agent )
     const Vector2D face_point( 50.0, 0.0 );
     const AngleDeg face_angle = ( face_point - wm.self().pos() ).th();
 
-    //     if ( wm.setplayCount() <= 3 )
-    //     {
-    //         Body_TurnToPoint( face_point ).execute( agent );
-    //         agent->setNeckAction( new Neck_ScanField() );
-    //         return;
-    //     }
-
     if ( wm.time().stopped() > 0 )
     {
         dlog.addText( Logger::TEAM,
