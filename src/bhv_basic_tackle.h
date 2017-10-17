@@ -143,8 +143,6 @@ public:
 
 private:
 
-    bool executeOld( rcsc::PlayerAgent * agent );
-    bool executeV12( rcsc::PlayerAgent * agent );
     bool executeV14( rcsc::PlayerAgent * agent,
                      const bool use_foul );
 };
