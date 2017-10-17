@@ -31,6 +31,7 @@
 #include "bhv_set_play_kick_off.h"
 
 #include "bhv_basic_move.h"
+#include "bhv_basic_offensive_kick.h"
 
 #include "bhv_go_to_static_ball.h"
 #include "bhv_set_play.h"
@@ -39,8 +40,8 @@
 #include <rcsc/action/body_smart_kick.h>
 
 #include <rcsc/action/basic_actions.h>
+#include <rcsc/action/body_clear_ball.h>
 #include <rcsc/action/body_go_to_point.h>
-//#include <rcsc/action/body_kick_one_step.h>
 #include <rcsc/action/neck_scan_field.h>
 
 #include <rcsc/player/player_agent.h>
@@ -120,59 +121,11 @@ Bhv_SetPlayKickOff::doKick( PlayerAgent * agent )
     }
     else
     {
-        const PlayerObject * teammate = wm.teammatesFromSelf().front();
-        double dist = teammate->distFromSelf();
-
-        if ( dist > 35.0 )
-        {
-            // too far
-            target_point.assign( ServerParam::i().pitchHalfLength(),
-                                 static_cast< double >
-                                 ( -1 + 2 * wm.time().cycle() % 2 )
-                                 * 0.8 * ServerParam::i().goalHalfWidth() );
-            dlog.addText( Logger::TEAM,
-                          __FILE__": nearest teammate is too far. target=(%.1f %.1f)",
-                          target_point.x, target_point.y );
-        }
-        else
-        {
-            target_point = teammate->inertiaFinalPoint();
-
-            ball_speed = std::min( max_ball_speed,
-                                   calc_first_term_geom_series_last( 1.8,
-                                                                     dist,
-                                                                     ServerParam::i().ballDecay() ) );
-            dlog.addText( Logger::TEAM,
-                          __FILE__": nearest teammate %d target=(%.1f %.1f) speed=%.3f",
-                          teammate->unum(),
-                          target_point.x, target_point.y,
-                          ball_speed );
-        }
+        if(Bhv_BasicOffensiveKick().pass(agent))
+            return;
     }
 
-    Vector2D ball_vel = Vector2D::polar2vector( ball_speed,
-                                                ( target_point - wm.ball().pos() ).th() );
-    Vector2D ball_next = wm.ball().pos() + ball_next;
-    while ( wm.self().pos().dist( ball_next ) < wm.self().playerType().kickableArea() + 0.2 )
-    {
-        ball_vel.setLength( ball_speed + 0.1 );
-        ball_speed += 0.1;
-        ball_next = wm.ball().pos() + ball_vel;
-
-        dlog.addText( Logger::TEAM,
-                      __FILE__": kickable in next cycle. adjust ball speed to %.3f",
-                      ball_speed );
-    }
-
-    ball_speed = std::min( ball_speed, max_ball_speed );
-
-    agent->debugClient().setTarget( target_point );
-
-    // enforce one step kick
-    Body_SmartKick( target_point,
-                    ball_speed,
-                    ball_speed * 0.96,
-                    1 ).execute( agent );
+    Body_ClearBall2009().execute(agent);
     agent->setNeckAction( new Neck_ScanField() );
 }
 
