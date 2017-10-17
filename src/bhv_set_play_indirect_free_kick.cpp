@@ -44,6 +44,7 @@
 #include <rcsc/action/body_kick_collide_with_ball.h>
 #include <rcsc/action/neck_scan_field.h>
 #include <rcsc/action/neck_turn_to_ball_or_scan.h>
+#include <rcsc/action/body_clear_ball.h>
 
 #include <rcsc/player/player_agent.h>
 #include <rcsc/player/debug_client.h>
@@ -124,8 +125,6 @@ Bhv_SetPlayIndirectFreeKick::doKicker( PlayerAgent * agent )
 
     const WorldModel & wm = agent->world();
 
-    const double max_kick_speed = wm.self().kickRate() * ServerParam::i().maxPower();
-
     if(Bhv_BasicOffensiveKick().pass(agent)){
         	return;
         }
@@ -139,102 +138,10 @@ Bhv_SetPlayIndirectFreeKick::doKicker( PlayerAgent * agent )
         return;
     }
 
-    //
-    // no teammate
-    //
-    if ( wm.teammatesFromBall().empty()
-         || wm.teammatesFromBall().front()->distFromSelf() > 35.0
-         || wm.teammatesFromBall().front()->pos().x < -30.0 )
-    {
-        const int real_set_play_count
-            = static_cast< int >( wm.time().cycle() - wm.lastSetPlayStartTime().cycle() );
-
-        if ( real_set_play_count <= ServerParam::i().dropBallTime() - 3 )
-        {
-            dlog.addText( Logger::TEAM,
-                          __FILE__": (doKick) real set play count = %d <= drop_time-3, wait...",
-                          real_set_play_count );
-            Body_TurnToPoint( Vector2D( 50.0, 0.0 ) ).execute( agent );
-            agent->setNeckAction( new Neck_ScanField() );
-            return;
-        }
-
-        Vector2D target_point( ServerParam::i().pitchHalfLength(),
-                               static_cast< double >( -1 + 2 * wm.time().cycle() % 2 )
-                               * ( ServerParam::i().goalHalfWidth() - 0.8 ) );
-        double ball_speed = max_kick_speed;
-
-        agent->debugClient().addMessage( "IndKick:ForceShoot" );
-        agent->debugClient().setTarget( target_point );
-        dlog.addText( Logger::TEAM,
-                      __FILE__":  kick to goal (%.1f %.1f) speed=%.2f",
-                      target_point.x, target_point.y,
-                      ball_speed );
-
-        Body_KickOneStep( target_point, ball_speed ).execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
-        return;
-    }
-
-    //
-    // kick to the teammate nearest to opponent goal
-    //
-
-    const Vector2D goal( ServerParam::i().pitchHalfLength(),
-                         wm.self().pos().y * 0.8 );
-
-    double min_dist = 100000.0;
-    const PlayerObject * receiver = static_cast< const PlayerObject * >( 0 );
-
-    const PlayerPtrCont::const_iterator t_end = wm.teammatesFromBall().end();
-    for ( PlayerPtrCont::const_iterator t = wm.teammatesFromBall().begin();
-          t != t_end;
-          ++t )
-    {
-        if ( (*t)->posCount() > 5 ) continue;
-        if ( (*t)->distFromBall() < 1.5 ) continue;
-        if ( (*t)->distFromBall() > 20.0 ) continue;
-        if ( (*t)->pos().x > wm.offsideLineX() ) continue;
-
-        double dist = (*t)->pos().dist( goal ) + (*t)->distFromBall();
-        if ( dist < min_dist )
-        {
-            min_dist = dist;
-            receiver = (*t);
-        }
-    }
-
-    Vector2D target_point = goal;
-    double target_dist = 10.0;
-    if ( ! receiver )
-    {
-        target_dist = wm.teammatesFromSelf().front()->distFromSelf();
-        target_point = wm.teammatesFromSelf().front()->pos();
-    }
-    else
-    {
-        target_dist = receiver->distFromSelf();
-        target_point = receiver->pos();
-        target_point.x += 0.6;
-    }
-
-    double ball_speed = calc_first_term_geom_series_last( 1.8, // end speed
-                                                          target_dist,
-                                                          ServerParam::i().ballDecay() );
-    ball_speed = std::min( ball_speed, max_kick_speed );
-
-    agent->debugClient().addMessage( "IndKick:ForcePass%.3f", ball_speed );
-    agent->debugClient().setTarget( target_point );
-    dlog.addText( Logger::TEAM,
-                  __FILE__":  pass to nearest teammate (%.1f %.1f) speed=%.2f",
-                  target_point.x, target_point.y,
-                  ball_speed );
-
-
-    Body_KickOneStep( target_point, ball_speed ).execute( agent );
+    Body_ClearBall2009().execute(agent);
     agent->setNeckAction( new Neck_ScanField() );
-    agent->addSayMessage( new BallMessage( agent->effector().queuedNextBallPos(),
-                                           agent->effector().queuedNextBallVel() ) );
+    return;
+
 }
 
 /*-------------------------------------------------------------------*/
@@ -345,33 +252,6 @@ get_avoid_circle_point( const WorldModel & wm,
                       __FILE__": (get_avoid_circle_point) circle contains target. adjusted=(%.2f %.2f)",
                       point.x, point.y );
     }
-
-    // if ( wm.ball().pos().x - circle_r < point.x
-    //      && point.x < wm.ball().pos().x
-    //      && wm.ball().pos().dist2( point ) < circle_r2 )
-    // {
-    //     if ( wm.self().pos().x < - SP.pitchHalfLength() + 0.1
-    //          && wm.self().pos().absY() < SP.goalHalfWidth() - 0.5 )
-    //     {
-    //         dlog.addText( Logger::TEAM,
-    //                       __FILE__": can go to the point directly." );
-    //         return point;
-    //     }
-    //     if ( wm.self().pos().x < wm.ball().pos().x - circle_r )
-    //     {
-    //         dlog.addText( Logger::TEAM,
-    //                       __FILE__": can go to the Y. my_pos.x=%.1f < ball_x-r=%f",
-    //                       wm.self().pos().x,
-    //                       wm.ball().pos().x - circle_r );
-    //         return Vector2D( wm.self().pos().x, point.y );
-    //     }
-    //     Vector2D tmp_point( wm.ball().pos().x - circle_r, point.y );
-    //     dlog.addText( Logger::TEAM,
-    //                   __FILE__": modified recursive. tmp_point=(%.1f %.1f)",
-    //                   tmp_point.x, tmp_point.y );
-    //     return get_avoid_circle_point( wm, tmp_point );
-    // }
-
 
     return Bhv_SetPlay::get_avoid_circle_point( wm, point );
 }
