@@ -43,7 +43,6 @@ private:
 
     void doKicker( rcsc::PlayerAgent * agent );
     bool doKickWait( rcsc::PlayerAgent * agent );
-    bool doKickToShooter( rcsc::PlayerAgent * agent );
 
     void doOffenseMove( rcsc::PlayerAgent * agent );
     void doDefenseMove( rcsc::PlayerAgent * agent );

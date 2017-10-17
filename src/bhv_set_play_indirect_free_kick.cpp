@@ -122,15 +122,6 @@ Bhv_SetPlayIndirectFreeKick::doKicker( PlayerAgent * agent )
         return;
     }
 
-    //
-    // kick to the teammate exist at the front of their goal
-    //
-
-    if ( doKickToShooter( agent ) )
-    {
-        return;
-    }
-
     const WorldModel & wm = agent->world();
 
     const double max_kick_speed = wm.self().kickRate() * ServerParam::i().maxPower();
@@ -298,86 +289,6 @@ Bhv_SetPlayIndirectFreeKick::doKickWait( PlayerAgent * agent )
     return false;
 }
 
-/*-------------------------------------------------------------------*/
-/*!
-
- */
-bool
-Bhv_SetPlayIndirectFreeKick::doKickToShooter( PlayerAgent * agent )
-{
-    const WorldModel & wm = agent->world();
-
-
-    const Vector2D goal( ServerParam::i().pitchHalfLength(),
-                         wm.self().pos().y * 0.8 );
-
-    double min_dist = 100000.0;
-    const PlayerObject * receiver = static_cast< const PlayerObject * >( 0 );
-
-    const PlayerPtrCont::const_iterator t_end = wm.teammatesFromBall().end();
-    for ( PlayerPtrCont::const_iterator t = wm.teammatesFromBall().begin();
-          t != t_end;
-          ++t )
-    {
-        if ( (*t)->posCount() > 5 ) continue;
-        //if ( (*t)->distFromBall() < 1.5 ) continue;
-        if ( (*t)->distFromBall() > 20.0 ) continue;
-        if ( (*t)->pos().x > wm.offsideLineX() ) continue;
-        if ( (*t)->pos().x < wm.ball().pos().x - 3.0 ) continue;
-        //if ( (*t)->pos().absY() > ServerParam::i().goalHalfWidth() * 0.5 ) continue;
-
-        double goal_dist = (*t)->pos().dist( goal );
-        if ( goal_dist > 16.0 )
-        {
-            continue;
-        }
-
-        double dist = goal_dist * 0.4 + (*t)->distFromBall() * 0.6;
-
-        if ( dist < min_dist )
-        {
-            min_dist = dist;
-            receiver = (*t);
-        }
-    }
-
-    if ( ! receiver )
-    {
-        dlog.addText( Logger::TEAM,
-                      __FILE__": (doKicToShooter) no shooter" );
-        return false;
-    }
-
-    const double max_ball_speed = wm.self().kickRate() * ServerParam::i().maxPower();
-
-    Vector2D target_point = receiver->pos() + receiver->vel();
-    target_point.x += 0.6;
-
-    double target_dist = wm.ball().pos().dist( target_point );
-
-    int ball_reach_step
-        = static_cast< int >( std::ceil( calc_length_geom_series( max_ball_speed,
-                                                                  target_dist,
-                                                                  ServerParam::i().ballDecay() ) ) );
-    double ball_speed = calc_first_term_geom_series( target_dist,
-                                                     ServerParam::i().ballDecay(),
-                                                     ball_reach_step );
-
-    ball_speed = std::min( ball_speed, max_ball_speed );
-
-    agent->debugClient().addMessage( "IndKick:KickToShooter%.3f", ball_speed );
-    agent->debugClient().setTarget( target_point );
-    dlog.addText( Logger::TEAM,
-                  __FILE__":  pass to nearest teammate (%.1f %.1f) ball_speed=%.2f reach_step=%d",
-                  target_point.x, target_point.y,
-                  ball_speed, ball_reach_step );
-
-    Body_KickOneStep( target_point, ball_speed ).execute( agent );
-    agent->setNeckAction( new Neck_ScanField() );
-
-    return true;
-
-}
 
 namespace {
 
