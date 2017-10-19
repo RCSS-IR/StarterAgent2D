@@ -41,7 +41,6 @@
 #include <rcsc/action/body_go_to_point.h>
 #include <rcsc/action/body_kick_one_step.h>
 #include <rcsc/action/body_kick_collide_with_ball.h>
-#include <rcsc/action/body_advance_ball.h>
 #include <rcsc/action/neck_scan_field.h>
 #include <rcsc/action/neck_turn_to_ball_or_scan.h>
 
@@ -195,20 +194,6 @@ Bhv_SetPlayKickIn::doKick( PlayerAgent * agent )
         return;
     }
 
-    //
-    // advance ball
-    //
-
-    if ( wm.self().pos().x < 20.0 )
-    {
-        agent->debugClient().addMessage( "KickIn:Advance" );
-
-        dlog.addText( Logger::TEAM,
-                      __FILE__": advance(1)" );
-        Body_AdvanceBall().execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
-        return;
-    }
 
     //
     // kick to the opponent side corner
