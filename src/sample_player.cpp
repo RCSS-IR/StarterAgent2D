@@ -220,15 +220,24 @@ SamplePlayer::actionImpl()
 
     if(this->world().gameMode().type() == GameMode::PlayOn){
         if(this->world().self().goalie()){
-            bool kickable = this->world().self().isKickable();
-            if ( this->world().existKickableTeammate()
-            && this->world().teammatesFromBall().front()->distFromBall()
-            < this->world().ball().distFromSelf() )
-            {
-                kickable = false;
-            }
 
-            if ( kickable )
+
+            static const Rect2D our_penalty( Vector2D( -ServerParam::i().pitchHalfLength(),
+                                                       -ServerParam::i().penaltyAreaHalfWidth() + 1.0 ),
+                                             Size2D( ServerParam::i().penaltyAreaLength() - 1.0,
+                                                     ServerParam::i().penaltyAreaWidth() - 2.0 ) );
+
+            //////////////////////////////////////////////////////////////
+            // catchable
+            if ( this->world().time().cycle()
+                 > this->world().self().catchTime().cycle() + ServerParam::i().catchBanCycle()
+                 && this->world().ball().distFromSelf() < ServerParam::i().catchableArea() - 0.05
+                 && our_penalty.contains( this->world().ball().pos() ) )
+            {
+                this->doCatch();
+                this->setNeckAction( new Neck_TurnToBall() );
+            }
+            else if ( this->world().self().isKickable() )
             {
                 Bhv_BasicOffensiveKick().execute( this );
             }
@@ -236,6 +245,7 @@ SamplePlayer::actionImpl()
             {
                 Bhv_GoalieBasicMove().execute( this );
             }
+
         }else{
             bool kickable = this->world().self().isKickable();
             if ( this->world().existKickableTeammate()
