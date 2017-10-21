@@ -45,10 +45,8 @@ public:
 private:
 
     void doKick( rcsc::PlayerAgent * agent );
-    bool doSecondKick( rcsc::PlayerAgent * agent );
     bool doKickWait( rcsc::PlayerAgent * agent );
     bool doPass( rcsc::PlayerAgent * agent );
-    bool doKickToFarSide( rcsc::PlayerAgent * agent );
 
     bool doIntercept( rcsc::PlayerAgent * agent );
     void doMove( rcsc::PlayerAgent * agent );

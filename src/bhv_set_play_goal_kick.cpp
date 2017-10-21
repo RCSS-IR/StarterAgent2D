@@ -90,11 +90,6 @@ Bhv_SetPlayGoalKick::execute( PlayerAgent * agent )
 void
 Bhv_SetPlayGoalKick::doKick( PlayerAgent * agent )
 {
-    if ( doSecondKick( agent ) )
-    {
-        return;
-    }
-
     // go to ball
     if ( Bhv_GoToStaticBall( 0.0 ).execute( agent ) )
     {
@@ -116,92 +111,8 @@ Bhv_SetPlayGoalKick::doKick( PlayerAgent * agent )
         return;
     }
 
-    if ( doKickToFarSide( agent ) )
-    {
-        return;
-    }
-
-    const WorldModel & wm = agent->world();
-
-
-    int real_set_play_count = static_cast< int >( wm.time().cycle() - wm.lastSetPlayStartTime().cycle() );
-    if ( real_set_play_count <= ServerParam::i().dropBallTime() - 10 )
-    {
-        agent->debugClient().addMessage( "GoalKick:FinalWait%d", real_set_play_count );
-        Body_TurnToBall().execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
-        return;
-    }
-
-    agent->debugClient().addMessage( "GoalKick:Clear" );
-    dlog.addText( Logger::TEAM,
-                  __FILE__": clear ball" );
-
     Body_ClearBall().execute( agent );
     agent->setNeckAction( new Neck_ScanField() );
-}
-
-
-/*-------------------------------------------------------------------*/
-/*!
-
- */
-bool
-Bhv_SetPlayGoalKick::doSecondKick( PlayerAgent * agent )
-{
-    const WorldModel & wm = agent->world();
-
-    if ( wm.ball().pos().x < -ServerParam::i().pitchHalfLength() + ServerParam::i().goalAreaLength() + 1.0
-         && wm.ball().pos().absY() < ServerParam::i().goalAreaWidth() * 0.5 + 1.0 )
-         //|| wm.ball().vel().r2() < std::pow( 0.3, 2 ) )
-    {
-        return false;
-    }
-
-    dlog.addText( Logger::TEAM,
-                  __FILE__": (doSecondKick) ball is moving." );
-
-    if ( wm.self().isKickable() )
-    {
-        if ( doPass( agent ) )
-        {
-            return true;
-        }
-
-        agent->debugClient().addMessage( "GoalKick:Clear" );
-        dlog.addText( Logger::TEAM,
-                      __FILE__": (doSecondKick) clear ball" );
-
-        Body_ClearBall().execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
-        return true;
-    }
-
-    if ( doIntercept( agent ) )
-    {
-        return true;
-    }
-
-    Vector2D ball_final = wm.ball().inertiaFinalPoint();
-
-    agent->debugClient().addMessage( "GoalKick:GoTo" );
-    agent->debugClient().setTarget( ball_final );
-    dlog.addText( Logger::TEAM,
-                  __FILE__": (doSecondKick) go to ball final point(%.2f %.2f)",
-                  ball_final.x, ball_final.y );
-
-    if ( ! Body_GoToPoint( ball_final,
-                           2.0,
-                           ServerParam::i().maxDashPower() ).execute( agent ) )
-    {
-        dlog.addText( Logger::TEAM,
-                      __FILE__": (doSecondKick) turn to center" );
-        Body_TurnToPoint( Vector2D( 0.0, 0.0 ) ).execute( agent );
-    }
-
-    agent->setNeckAction( new Neck_ScanField() );
-
-    return true;
 }
 
 /*-------------------------------------------------------------------*/
@@ -366,43 +277,6 @@ Bhv_SetPlayGoalKick::doMove( PlayerAgent * agent )
 
     Vector2D target_point = Bhv_BasicMove().getPosition( wm, wm.self().unum() );
     target_point.y += wm.ball().pos().y * 0.5;
-    if ( target_point.absY() > ServerParam::i().pitchHalfWidth() - 1.0 )
-    {
-        target_point.y = sign( target_point.y ) * ( ServerParam::i().pitchHalfWidth() - 1.0 );
-    }
-
-    if ( wm.self().stamina() > ServerParam::i().staminaMax() * 0.9 )
-    {
-        const PlayerObject * nearest_opp = wm.getOpponentNearestToSelf( 5 );
-
-        if ( nearest_opp
-             && nearest_opp->distFromSelf() < 3.0 )
-        {
-            Vector2D add_vec = ( wm.ball().pos() - target_point );
-            add_vec.setLength( 3.0 );
-
-            long time_val = wm.time().cycle() % 60;
-            if ( time_val < 20 )
-            {
-
-            }
-            else if ( time_val < 40 )
-            {
-                target_point += add_vec.rotatedVector( 90.0 );
-            }
-            else
-            {
-                target_point += add_vec.rotatedVector( -90.0 );
-            }
-
-            target_point.x = min_max( - ServerParam::i().pitchHalfLength(),
-                                      target_point.x,
-                                      + ServerParam::i().pitchHalfLength() );
-            target_point.y = min_max( - ServerParam::i().pitchHalfWidth(),
-                                      target_point.y,
-                                      + ServerParam::i().pitchHalfWidth() );
-        }
-    }
 
     agent->debugClient().addMessage( "GoalKickMove" );
     agent->debugClient().setTarget( target_point );
@@ -415,65 +289,5 @@ Bhv_SetPlayGoalKick::doMove( PlayerAgent * agent )
         // already there
         Body_TurnToBall().execute( agent );
     }
-
-    if ( wm.self().pos().dist( target_point ) > wm.ball().pos().dist( target_point ) * 0.2 + 6.0
-         || wm.self().stamina() < ServerParam::i().staminaMax() * 0.7 )
-    {
-        if ( ! wm.self().staminaModel().capacityIsEmpty() )
-        {
-            agent->debugClient().addMessage( "Sayw" );
-            agent->addSayMessage( new WaitRequestMessage() );
-        }
-    }
-
     agent->setNeckAction( new Neck_ScanField() );
-}
-
-/*-------------------------------------------------------------------*/
-/*!
-
- */
-bool
-Bhv_SetPlayGoalKick::doKickToFarSide( PlayerAgent * agent )
-{
-    const WorldModel & wm = agent->world();
-
-    Vector2D target_point( ServerParam::i().ourPenaltyAreaLineX() - 5.0,
-                           ServerParam::i().penaltyAreaHalfWidth() );
-    if ( wm.ball().pos().y > 0.0 )
-    {
-        target_point.y *= -1.0;
-    }
-
-    double ball_move_dist = wm.ball().pos().dist( target_point );
-    double ball_first_speed = calc_first_term_geom_series_last( 0.7,
-                                                                ball_move_dist,
-                                                                ServerParam::i().ballDecay() );
-    ball_first_speed = std::min( ServerParam::i().ballSpeedMax(),
-                                 ball_first_speed );
-    ball_first_speed = std::min( wm.self().kickRate() * ServerParam::i().maxPower(),
-                                 ball_first_speed );
-
-    Vector2D accel = target_point - wm.ball().pos();
-    accel.setLength( ball_first_speed );
-
-    double kick_power = std::min( ServerParam::i().maxPower(),
-                                  accel.r() / wm.self().kickRate() );
-    AngleDeg kick_angle = accel.th();
-
-
-    dlog.addText( Logger::TEAM,
-                  __FILE__" (doKickToFarSide) target=(%.2f %.2f) dist=%.3f ball_speed=%.3f",
-                  target_point.x, target_point.y,
-                  ball_move_dist,
-                  ball_first_speed );
-    dlog.addText( Logger::TEAM,
-                  __FILE__" (doKickToFarSide) kick_power=%f kick_angle=%.1f",
-                  kick_power,
-                  kick_angle.degree() );
-
-    agent->doKick( kick_power, kick_angle - wm.self().body() );
-
-    agent->setNeckAction( new Neck_ScanField() );
-    return true;
 }

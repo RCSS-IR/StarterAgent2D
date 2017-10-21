@@ -40,8 +40,6 @@ public:
     bool execute( rcsc::PlayerAgent * agent );
 
 private:
-    void doNormal( rcsc::PlayerAgent * agent );
-    bool doChaseBall( rcsc::PlayerAgent * agent );
 };
 
 #endif

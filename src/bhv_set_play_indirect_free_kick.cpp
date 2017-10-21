@@ -302,19 +302,6 @@ Bhv_SetPlayIndirectFreeKick::doOffenseMove( PlayerAgent * agent )
                       turn_point.x, turn_point.y );
     }
 
-    if ( target_point.x > 36.0
-         && ( wm.self().pos().dist( target_point )
-              > std::max( wm.ball().pos().dist( target_point ) * 0.2, dist_thr ) + 6.0
-              || wm.self().stamina() < ServerParam::i().staminaMax() * 0.7 )
-         )
-    {
-        if ( ! wm.self().staminaModel().capacityIsEmpty() )
-        {
-            agent->debugClient().addMessage( "Sayw" );
-            agent->addSayMessage( new WaitRequestMessage() );
-        }
-    }
-
     agent->setNeckAction( new Neck_TurnToBallOrScan() );
 }
 
