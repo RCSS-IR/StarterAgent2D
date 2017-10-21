@@ -78,22 +78,6 @@ Bhv_SetPlay::execute( PlayerAgent * agent )
 
     const WorldModel & wm = agent->world();
 
-#ifdef DEBUG_PRINT
-    Vector2D home_pos = Bhv_BasicMove().getPosition( wm, wm.self().unum() );
-    if ( ! home_pos.isValid() )
-    {
-        std::cerr << agent->config().teamName() << ": "
-        << wm.self().unum()
-        << " ***ERROR*** illegal home position."
-        << std::endl;
-        home_pos.assign( 0.0, 0.0 );
-    }
-
-    dlog.addCircle( Logger::TEAM,
-    home_pos, 0.5, "#0000ff", true );
-#endif
-
-
     if ( wm.self().goalie() )
     {
         if ( wm.gameMode().type() != GameMode::BackPass_

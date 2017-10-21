@@ -137,28 +137,16 @@ Bhv_SetPlayKickIn::doKick( PlayerAgent * agent )
 
             double ball_move_dist = wm.ball().pos().dist( target_point );
             int ball_reach_step
-                = static_cast< int >( std::ceil( calc_length_geom_series( max_ball_speed,
-                                                                          ball_move_dist,
-                                                                          ServerParam::i().ballDecay() ) ) );
+                = ball_move_dist / 2.5;
             double ball_speed = 0.0;
             if ( ball_reach_step > 3 )
             {
-                ball_speed = calc_first_term_geom_series( ball_move_dist,
-                                                          ServerParam::i().ballDecay(),
-                                                          ball_reach_step );
+                ball_speed = 2.5;
             }
             else
             {
-                ball_speed = calc_first_term_geom_series_last( 1.4,
-                                                               ball_move_dist,
-                                                               ServerParam::i().ballDecay() );
-                ball_reach_step
-                    = static_cast< int >( std::ceil( calc_length_geom_series( ball_speed,
-                                                                              ball_move_dist,
-                                                                              ServerParam::i().ballDecay() ) ) );
+                ball_speed = 1.5;
             }
-
-            ball_speed = std::min( ball_speed, max_ball_speed );
 
             agent->debugClient().addMessage( "KickIn:ForcePass%.3f", ball_speed );
             agent->debugClient().setTarget( target_point );
@@ -174,10 +162,6 @@ Bhv_SetPlayKickIn::doKick( PlayerAgent * agent )
             return;
         }
     }
-
-    //
-    // clear
-    //
 
     //
     // turn to ball
@@ -275,7 +259,7 @@ Bhv_SetPlayKickIn::doKickWait( PlayerAgent * agent )
 
     if ( wm.setplayCount() >= 15
          && wm.seeTime() == wm.time()
-         && wm.self().stamina() > ServerParam::i().staminaMax() * 0.6 )
+         && wm.self().stamina() > 8000 )
     {
         dlog.addText( Logger::TEAM,
                       __FILE__": (doKickWait) set play count = %d, force kick mode",
@@ -284,7 +268,7 @@ Bhv_SetPlayKickIn::doKickWait( PlayerAgent * agent )
     }
 
     if ( wm.seeTime() != wm.time()
-         || wm.self().stamina() < ServerParam::i().staminaMax() * 0.9 )
+         || wm.self().stamina() < 8000 )
     {
         Body_TurnToBall().execute( agent );
         agent->setNeckAction( new Neck_ScanField() );
@@ -308,42 +292,8 @@ Bhv_SetPlayKickIn::doMove( PlayerAgent * agent )
     const WorldModel & wm = agent->world();
 
     Vector2D target_point = Bhv_BasicMove().getPosition( wm, wm.self().unum() );
-    bool avoid_opponent = false;
-    if ( wm.self().stamina() > ServerParam::i().staminaMax() * 0.9 )
-    {
-        const PlayerObject * nearest_opp = wm.getOpponentNearestToSelf( 5 );
-
-        if ( nearest_opp
-             && nearest_opp->pos().dist( target_point ) < 3.0 )
-        {
-            Vector2D add_vec = ( wm.ball().pos() - target_point );
-            add_vec.setLength( 3.0 );
-
-            long time_val = wm.time().cycle() % 60;
-            if ( time_val < 20 )
-            {
-
-            }
-            else if ( time_val < 40 )
-            {
-                target_point += add_vec.rotatedVector( 90.0 );
-            }
-            else
-            {
-                target_point += add_vec.rotatedVector( -90.0 );
-            }
-
-            target_point.x = min_max( - ServerParam::i().pitchHalfLength(),
-                                      target_point.x,
-                                      + ServerParam::i().pitchHalfLength() );
-            target_point.y = min_max( - ServerParam::i().pitchHalfWidth(),
-                                      target_point.y,
-                                      + ServerParam::i().pitchHalfWidth() );
-            avoid_opponent = true;
-        }
-    }
-
     double dash_power = Bhv_SetPlay::get_set_play_dash_power( agent );
+
     double dist_thr = wm.ball().distFromSelf() * 0.07;
     if ( dist_thr < 1.0 ) dist_thr = 1.0;
 
@@ -360,30 +310,7 @@ Bhv_SetPlayKickIn::doMove( PlayerAgent * agent )
                            dash_power
                            ).execute( agent ) )
     {
-        // already there
-        if ( kicker_ball_dist > 1.0 )
-        {
-            agent->doTurn( 120.0 );
-        }
-        else
-        {
             Body_TurnToBall().execute( agent );
-        }
-    }
-
-    Vector2D my_inertia = wm.self().inertiaFinalPoint();
-    double wait_dist_buf = ( avoid_opponent
-                             ? 10.0
-                             : wm.ball().pos().dist( target_point ) * 0.2 + 6.0 );
-
-    if ( my_inertia.dist( target_point ) > wait_dist_buf
-         || wm.self().stamina() < rcsc::ServerParam::i().staminaMax() * 0.7 )
-    {
-        if ( ! wm.self().staminaModel().capacityIsEmpty() )
-        {
-            agent->debugClient().addMessage( "Sayw" );
-            agent->addSayMessage( new WaitRequestMessage() );
-        }
     }
 
     if ( kicker_ball_dist > 3.0 )
