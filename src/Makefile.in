@@ -131,7 +131,6 @@ am__objects_2 = sample_player-bhv_basic_move.$(OBJEXT) \
 	sample_player-intention_receive.$(OBJEXT) \
 	sample_player-intention_wait_after_set_play_kick.$(OBJEXT) \
 	sample_player-sample_communication.$(OBJEXT) \
-	sample_player-keepaway_communication.$(OBJEXT) \
 	sample_player-sample_player.$(OBJEXT) \
 	sample_player-main_player.$(OBJEXT)
 am_sample_player_OBJECTS = $(am__objects_2)
@@ -332,7 +331,6 @@ PLAYERSOURCES = \
 	intention_receive.cpp \
 	intention_wait_after_set_play_kick.cpp \
 	sample_communication.cpp \
-	keepaway_communication.cpp \
 	sample_player.cpp \
 	main_player.cpp
 
@@ -359,7 +357,6 @@ PLAYERHEADERS = \
 	intention_wait_after_set_play_kick.h \
 	communication.h \
 	sample_communication.h \
-	keepaway_communication.h \
 	sample_player.h
 
 COACHSOURCES = \
@@ -498,7 +495,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-bhv_their_goal_kick_move.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-intention_receive.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-intention_wait_after_set_play_kick.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-keepaway_communication.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-main_player.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-neck_goalie_turn_neck.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-sample_communication.Po@am__quote@
@@ -842,20 +838,6 @@ sample_player-sample_communication.obj: sample_communication.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='sample_communication.cpp' object='sample_player-sample_communication.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-sample_communication.obj `if test -f 'sample_communication.cpp'; then $(CYGPATH_W) 'sample_communication.cpp'; else $(CYGPATH_W) '$(srcdir)/sample_communication.cpp'; fi`
-
-sample_player-keepaway_communication.o: keepaway_communication.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-keepaway_communication.o -MD -MP -MF $(DEPDIR)/sample_player-keepaway_communication.Tpo -c -o sample_player-keepaway_communication.o `test -f 'keepaway_communication.cpp' || echo '$(srcdir)/'`keepaway_communication.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/sample_player-keepaway_communication.Tpo $(DEPDIR)/sample_player-keepaway_communication.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='keepaway_communication.cpp' object='sample_player-keepaway_communication.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-keepaway_communication.o `test -f 'keepaway_communication.cpp' || echo '$(srcdir)/'`keepaway_communication.cpp
-
-sample_player-keepaway_communication.obj: keepaway_communication.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-keepaway_communication.obj -MD -MP -MF $(DEPDIR)/sample_player-keepaway_communication.Tpo -c -o sample_player-keepaway_communication.obj `if test -f 'keepaway_communication.cpp'; then $(CYGPATH_W) 'keepaway_communication.cpp'; else $(CYGPATH_W) '$(srcdir)/keepaway_communication.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/sample_player-keepaway_communication.Tpo $(DEPDIR)/sample_player-keepaway_communication.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='keepaway_communication.cpp' object='sample_player-keepaway_communication.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-keepaway_communication.obj `if test -f 'keepaway_communication.cpp'; then $(CYGPATH_W) 'keepaway_communication.cpp'; else $(CYGPATH_W) '$(srcdir)/keepaway_communication.cpp'; fi`
 
 sample_player-sample_player.o: sample_player.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-sample_player.o -MD -MP -MF $(DEPDIR)/sample_player-sample_player.Tpo -c -o sample_player-sample_player.o `test -f 'sample_player.cpp' || echo '$(srcdir)/'`sample_player.cpp

@@ -35,7 +35,6 @@
 #include "bhv_goalie_basic_move.h"
 
 #include "sample_communication.h"
-#include "keepaway_communication.h"
 
 #include "bhv_penalty_kick.h"
 #include "bhv_set_play.h"
@@ -385,7 +384,6 @@ SamplePlayer::handleServerParam()
     if ( ServerParam::i().keepawayMode() )
     {
         std::cerr << "set Keepaway mode communication." << std::endl;
-        M_communication = Communication::Ptr( new KeepawayCommunication() );
     }
 }
 

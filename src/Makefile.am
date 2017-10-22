@@ -22,7 +22,6 @@ PLAYERSOURCES = \
 	intention_receive.cpp \
 	intention_wait_after_set_play_kick.cpp \
 	sample_communication.cpp \
-	keepaway_communication.cpp \
 	sample_player.cpp \
 	main_player.cpp
 
@@ -49,7 +48,6 @@ PLAYERHEADERS = \
 	intention_wait_after_set_play_kick.h \
 	communication.h \
 	sample_communication.h \
-	keepaway_communication.h \
 	sample_player.h
 
 
