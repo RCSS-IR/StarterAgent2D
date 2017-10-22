@@ -49,9 +49,6 @@ private:
     bool doOneKickShoot( rcsc::PlayerAgent * agent );
     // used only for multi kick PK
     bool doShoot( rcsc::PlayerAgent * agent );
-    bool getShootTarget( const rcsc::PlayerAgent * agent,
-                         rcsc::Vector2D * point,
-                         double * first_speed );
     bool doDribble( rcsc::PlayerAgent * agent );
 
 
@@ -60,10 +57,7 @@ private:
     bool doGoalie( rcsc::PlayerAgent * agent );
 
     bool doGoalieBasicMove( rcsc::PlayerAgent * agent );
-    rcsc::Vector2D getGoalieMovePos( const rcsc::Vector2D & ball_pos,
-                                     const rcsc::Vector2D & my_pos );
     bool isGoalieBallChaseSituation();
-    bool doGoalieSlideChase( rcsc::PlayerAgent * agent );
 };
 
 #endif
