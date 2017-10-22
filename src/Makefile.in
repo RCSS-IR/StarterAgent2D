@@ -126,7 +126,6 @@ am__objects_2 = sample_player-bhv_basic_move.$(OBJEXT) \
 	sample_player-bhv_set_play_kick_off.$(OBJEXT) \
 	sample_player-bhv_their_goal_kick_move.$(OBJEXT) \
 	sample_player-bhv_penalty_kick.$(OBJEXT) \
-	sample_player-neck_goalie_turn_neck.$(OBJEXT) \
 	sample_player-view_tactical.$(OBJEXT) \
 	sample_player-intention_receive.$(OBJEXT) \
 	sample_player-intention_wait_after_set_play_kick.$(OBJEXT) \
@@ -326,7 +325,6 @@ PLAYERSOURCES = \
 	bhv_set_play_kick_off.cpp \
 	bhv_their_goal_kick_move.cpp \
 	bhv_penalty_kick.cpp \
-	neck_goalie_turn_neck.cpp \
 	view_tactical.cpp \
 	intention_receive.cpp \
 	intention_wait_after_set_play_kick.cpp \
@@ -351,7 +349,6 @@ PLAYERHEADERS = \
 	bhv_set_play_kick_off.h \
 	bhv_their_goal_kick_move.h \
 	bhv_penalty_kick.h \
-	neck_goalie_turn_neck.h \
 	view_tactical.h \
 	intention_receive.h \
 	intention_wait_after_set_play_kick.h \
@@ -496,7 +493,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-intention_receive.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-intention_wait_after_set_play_kick.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-main_player.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-neck_goalie_turn_neck.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-sample_communication.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-sample_player.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-view_tactical.Po@am__quote@
@@ -768,20 +764,6 @@ sample_player-bhv_penalty_kick.obj: bhv_penalty_kick.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bhv_penalty_kick.cpp' object='sample_player-bhv_penalty_kick.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-bhv_penalty_kick.obj `if test -f 'bhv_penalty_kick.cpp'; then $(CYGPATH_W) 'bhv_penalty_kick.cpp'; else $(CYGPATH_W) '$(srcdir)/bhv_penalty_kick.cpp'; fi`
-
-sample_player-neck_goalie_turn_neck.o: neck_goalie_turn_neck.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-neck_goalie_turn_neck.o -MD -MP -MF $(DEPDIR)/sample_player-neck_goalie_turn_neck.Tpo -c -o sample_player-neck_goalie_turn_neck.o `test -f 'neck_goalie_turn_neck.cpp' || echo '$(srcdir)/'`neck_goalie_turn_neck.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/sample_player-neck_goalie_turn_neck.Tpo $(DEPDIR)/sample_player-neck_goalie_turn_neck.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='neck_goalie_turn_neck.cpp' object='sample_player-neck_goalie_turn_neck.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-neck_goalie_turn_neck.o `test -f 'neck_goalie_turn_neck.cpp' || echo '$(srcdir)/'`neck_goalie_turn_neck.cpp
-
-sample_player-neck_goalie_turn_neck.obj: neck_goalie_turn_neck.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-neck_goalie_turn_neck.obj -MD -MP -MF $(DEPDIR)/sample_player-neck_goalie_turn_neck.Tpo -c -o sample_player-neck_goalie_turn_neck.obj `if test -f 'neck_goalie_turn_neck.cpp'; then $(CYGPATH_W) 'neck_goalie_turn_neck.cpp'; else $(CYGPATH_W) '$(srcdir)/neck_goalie_turn_neck.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/sample_player-neck_goalie_turn_neck.Tpo $(DEPDIR)/sample_player-neck_goalie_turn_neck.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='neck_goalie_turn_neck.cpp' object='sample_player-neck_goalie_turn_neck.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-neck_goalie_turn_neck.obj `if test -f 'neck_goalie_turn_neck.cpp'; then $(CYGPATH_W) 'neck_goalie_turn_neck.cpp'; else $(CYGPATH_W) '$(srcdir)/neck_goalie_turn_neck.cpp'; fi`
 
 sample_player-view_tactical.o: view_tactical.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-view_tactical.o -MD -MP -MF $(DEPDIR)/sample_player-view_tactical.Tpo -c -o sample_player-view_tactical.o `test -f 'view_tactical.cpp' || echo '$(srcdir)/'`view_tactical.cpp

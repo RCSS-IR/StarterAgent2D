@@ -17,7 +17,6 @@ PLAYERSOURCES = \
 	bhv_set_play_kick_off.cpp \
 	bhv_their_goal_kick_move.cpp \
 	bhv_penalty_kick.cpp \
-	neck_goalie_turn_neck.cpp \
 	view_tactical.cpp \
 	intention_receive.cpp \
 	intention_wait_after_set_play_kick.cpp \
@@ -42,7 +41,6 @@ PLAYERHEADERS = \
 	bhv_set_play_kick_off.h \
 	bhv_their_goal_kick_move.h \
 	bhv_penalty_kick.h \
-	neck_goalie_turn_neck.h \
 	view_tactical.h \
 	intention_receive.h \
 	intention_wait_after_set_play_kick.h \
