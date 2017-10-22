@@ -43,9 +43,6 @@
 
 #include "bhv_custom_before_kick_off.h"
 
-
-#include "view_tactical.h"
-
 #include "intention_receive.h"
 
 #include <rcsc/action/basic_actions.h>
@@ -444,7 +441,6 @@ SamplePlayer::doPreprocess()
         __FILE__": tackle wait. expires= %d",
         wm.self().tackleExpires() );
         // face neck to ball
-        this->setViewAction( new View_Tactical() );
         return true;
     }
 
@@ -470,7 +466,6 @@ SamplePlayer::doPreprocess()
         KickOffPosition[11] = Vector2D(-11,0);
         Vector2D move_point =  KickOffPosition.at( wm.self().unum() );
         Bhv_CustomBeforeKickOff( move_point ).execute( this );
-        this->setViewAction( new View_Tactical() );
         return true;
     }
 
@@ -497,16 +492,9 @@ SamplePlayer::doPreprocess()
     {
         dlog.addText( Logger::TEAM,
         __FILE__": search ball" );
-        this->setViewAction( new View_Tactical() );
         Bhv_NeckBodyToBall().execute( this );
         return true;
     }
-
-    //
-    // set default change view
-    //
-
-    this->setViewAction( new View_Tactical() );
 
     //
     // check queued action
