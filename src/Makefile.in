@@ -126,7 +126,6 @@ am__objects_2 = sample_player-bhv_basic_move.$(OBJEXT) \
 	sample_player-bhv_set_play_kick_off.$(OBJEXT) \
 	sample_player-bhv_their_goal_kick_move.$(OBJEXT) \
 	sample_player-bhv_penalty_kick.$(OBJEXT) \
-	sample_player-view_tactical.$(OBJEXT) \
 	sample_player-intention_receive.$(OBJEXT) \
 	sample_player-intention_wait_after_set_play_kick.$(OBJEXT) \
 	sample_player-sample_communication.$(OBJEXT) \
@@ -325,7 +324,6 @@ PLAYERSOURCES = \
 	bhv_set_play_kick_off.cpp \
 	bhv_their_goal_kick_move.cpp \
 	bhv_penalty_kick.cpp \
-	view_tactical.cpp \
 	intention_receive.cpp \
 	intention_wait_after_set_play_kick.cpp \
 	sample_communication.cpp \
@@ -349,7 +347,6 @@ PLAYERHEADERS = \
 	bhv_set_play_kick_off.h \
 	bhv_their_goal_kick_move.h \
 	bhv_penalty_kick.h \
-	view_tactical.h \
 	intention_receive.h \
 	intention_wait_after_set_play_kick.h \
 	communication.h \
@@ -495,7 +492,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-main_player.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-sample_communication.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-sample_player.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-view_tactical.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_trainer-main_trainer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_trainer-sample_trainer.Po@am__quote@
 
@@ -764,20 +760,6 @@ sample_player-bhv_penalty_kick.obj: bhv_penalty_kick.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bhv_penalty_kick.cpp' object='sample_player-bhv_penalty_kick.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-bhv_penalty_kick.obj `if test -f 'bhv_penalty_kick.cpp'; then $(CYGPATH_W) 'bhv_penalty_kick.cpp'; else $(CYGPATH_W) '$(srcdir)/bhv_penalty_kick.cpp'; fi`
-
-sample_player-view_tactical.o: view_tactical.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-view_tactical.o -MD -MP -MF $(DEPDIR)/sample_player-view_tactical.Tpo -c -o sample_player-view_tactical.o `test -f 'view_tactical.cpp' || echo '$(srcdir)/'`view_tactical.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/sample_player-view_tactical.Tpo $(DEPDIR)/sample_player-view_tactical.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='view_tactical.cpp' object='sample_player-view_tactical.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-view_tactical.o `test -f 'view_tactical.cpp' || echo '$(srcdir)/'`view_tactical.cpp
-
-sample_player-view_tactical.obj: view_tactical.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-view_tactical.obj -MD -MP -MF $(DEPDIR)/sample_player-view_tactical.Tpo -c -o sample_player-view_tactical.obj `if test -f 'view_tactical.cpp'; then $(CYGPATH_W) 'view_tactical.cpp'; else $(CYGPATH_W) '$(srcdir)/view_tactical.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/sample_player-view_tactical.Tpo $(DEPDIR)/sample_player-view_tactical.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='view_tactical.cpp' object='sample_player-view_tactical.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-view_tactical.obj `if test -f 'view_tactical.cpp'; then $(CYGPATH_W) 'view_tactical.cpp'; else $(CYGPATH_W) '$(srcdir)/view_tactical.cpp'; fi`
 
 sample_player-intention_receive.o: intention_receive.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-intention_receive.o -MD -MP -MF $(DEPDIR)/sample_player-intention_receive.Tpo -c -o sample_player-intention_receive.o `test -f 'intention_receive.cpp' || echo '$(srcdir)/'`intention_receive.cpp
