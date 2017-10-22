@@ -7,7 +7,6 @@ PLAYERSOURCES = \
 	bhv_custom_before_kick_off.cpp \
 	bhv_go_to_static_ball.cpp \
 	bhv_goalie_basic_move.cpp \
-	bhv_goalie_chase_ball.cpp \
 	bhv_goalie_free_kick.cpp \
 	bhv_prepare_set_play_kick.cpp \
 	bhv_set_play.cpp \
@@ -34,7 +33,6 @@ PLAYERHEADERS = \
 	bhv_custom_before_kick_off.h \
 	bhv_go_to_static_ball.h \
 	bhv_goalie_basic_move.h \
-	bhv_goalie_chase_ball.h \
 	bhv_goalie_free_kick.h \
 	bhv_prepare_set_play_kick.h \
 	bhv_set_play.h \
