@@ -35,8 +35,6 @@
 #include <rcsc/action/basic_actions.h>
 #include <rcsc/action/body_go_to_point.h>
 #include <rcsc/action/body_intercept.h>
-#include <rcsc/action/neck_turn_to_ball_or_scan.h>
-#include <rcsc/action/neck_turn_to_low_conf_teammate.h>
 
 #include <rcsc/player/player_agent.h>
 #include <rcsc/player/debug_client.h>
@@ -107,16 +105,6 @@ Bhv_BasicMove::execute( PlayerAgent * agent )
                            ).execute( agent ) )
     {
         Body_TurnToBall().execute( agent );
-    }
-
-    if ( wm.existKickableOpponent()
-         && wm.ball().distFromSelf() < 18.0 )
-    {
-        agent->setNeckAction( new Neck_TurnToBall() );
-    }
-    else
-    {
-        agent->setNeckAction( new Neck_TurnToBallOrScan() );
     }
 
     return true;

@@ -34,7 +34,6 @@
 #include "bhv_set_play.h"
 
 #include <rcsc/action/basic_actions.h>
-#include <rcsc/action/neck_scan_field.h>
 #include <rcsc/action/body_go_to_point.h>
 
 #include <rcsc/player/player_agent.h>
@@ -87,7 +86,6 @@ Bhv_PrepareSetPlayKick::execute( PlayerAgent * agent )
             Body_TurnToBall().execute( agent );
         }
 
-        agent->setNeckAction( new Neck_ScanField() );
         s_rest_wait_cycle--;
 
         dlog.addText( Logger::TEAM,

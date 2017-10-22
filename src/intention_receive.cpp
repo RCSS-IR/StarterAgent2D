@@ -34,8 +34,6 @@
 
 #include <rcsc/action/basic_actions.h>
 #include <rcsc/action/body_go_to_point.h>
-#include <rcsc/action/neck_turn_to_ball_or_scan.h>
-#include <rcsc/action/neck_turn_to_low_conf_teammate.h>
 
 #include <rcsc/player/player_agent.h>
 #include <rcsc/player/intercept_table.h>
@@ -151,7 +149,6 @@ IntentionReceive::execute( PlayerAgent * agent )
         agent->debugClient().addMessage( "IntentionRecv:Intercept" );
         Body_Intercept().execute( agent );
 
-        agent->setNeckAction( new Neck_TurnToBallOrScan() );
         return true;
     }
 
@@ -161,7 +158,6 @@ IntentionReceive::execute( PlayerAgent * agent )
                       __FILE__": execute. intercept cycle=%d",
                       self_min );
         agent->debugClient().addMessage( "IntentionRecv%d:Intercept", M_step );
-        agent->setNeckAction( new Neck_TurnToBallOrScan() );
         return true;
     }
 
@@ -177,7 +173,6 @@ IntentionReceive::execute( PlayerAgent * agent )
                     M_buffer,
                     M_dash_power
                     ).execute( agent );
-    agent->setNeckAction( new Neck_TurnToBallOrScan() );
 
     return true;
 }

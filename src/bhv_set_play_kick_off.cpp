@@ -42,7 +42,6 @@
 #include <rcsc/action/basic_actions.h>
 #include <rcsc/action/body_clear_ball.h>
 #include <rcsc/action/body_go_to_point.h>
-#include <rcsc/action/neck_scan_field.h>
 
 #include <rcsc/player/player_agent.h>
 #include <rcsc/common/logger.h>
@@ -126,7 +125,6 @@ Bhv_SetPlayKickOff::doKick( PlayerAgent * agent )
     }
 
     Body_ClearBall2009().execute(agent);
-    agent->setNeckAction( new Neck_ScanField() );
 }
 
 /*-------------------------------------------------------------------*/
@@ -156,7 +154,6 @@ Bhv_SetPlayKickOff::doKickWait( PlayerAgent * agent )
                       __FILE__": (doKickWait) delaying" );
 
         Body_TurnToAngle( 180.0 ).execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
         return true;
     }
 
@@ -167,7 +164,6 @@ Bhv_SetPlayKickOff::doKickWait( PlayerAgent * agent )
                       __FILE__": (doKickWait) turn" );
 
         Body_TurnToAngle( 180.0 ).execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
         return true;
     }
 
@@ -178,7 +174,6 @@ Bhv_SetPlayKickOff::doKickWait( PlayerAgent * agent )
                       __FILE__": (doKickWait) no teammate" );
 
         Body_TurnToAngle( 180.0 ).execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
         return true;
     }
 
@@ -189,7 +184,6 @@ Bhv_SetPlayKickOff::doKickWait( PlayerAgent * agent )
                       __FILE__": (doKickWait) wait..." );
 
         Body_TurnToAngle( 180.0 ).execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
         return true;
     }
 
@@ -202,7 +196,6 @@ Bhv_SetPlayKickOff::doKickWait( PlayerAgent * agent )
 
         //Body_TurnToBall().execute( agent );
         Body_TurnToAngle( 180.0 ).execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
         return true;
     }
 
@@ -232,7 +225,6 @@ Bhv_SetPlayKickOff::doMove( PlayerAgent * agent )
     {
         Body_TurnToBall().execute( agent );
     }
-    agent->setNeckAction( new Neck_ScanField() );
 
     agent->debugClient().setTarget( target_point );
 }

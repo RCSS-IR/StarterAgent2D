@@ -42,8 +42,6 @@
 #include <rcsc/action/body_go_to_point.h>
 #include <rcsc/action/body_kick_one_step.h>
 #include <rcsc/action/body_clear_ball.h>
-#include <rcsc/action/neck_scan_field.h>
-#include <rcsc/action/neck_turn_to_ball_or_scan.h>
 
 #include <rcsc/player/player_agent.h>
 #include <rcsc/player/debug_client.h>
@@ -112,34 +110,6 @@ Bhv_SetPlayFreeKick::doKick( PlayerAgent * agent )
     const double max_ball_speed = wm.self().kickRate() * ServerParam::i().maxPower();
 
     //
-    // pass
-    //
-
-    // {
-    //     Vector2D target_point;
-    //     double ball_speed = 0.0;
-    //     if ( Body_Pass::get_best_pass( wm,
-    //                                    &target_point,
-    //                                    &ball_speed,
-    //                                    NULL )
-    //          && ( target_point.x > -25.0
-    //               || target_point.x > wm.ball().pos().x + 10.0 )
-    //          && ball_speed < max_ball_speed * 1.1 )
-    //     {
-    //         ball_speed = std::min( ball_speed, max_ball_speed );
-    //         agent->debugClient().addMessage( "FreeKick:Pass%.3f", ball_speed );
-    //         agent->debugClient().setTarget( target_point );
-    //         dlog.addText( Logger::TEAM,
-    //                       __FILE__":  pass target=(%.1f %.1f) speed=%.2f",
-    //                       target_point.x, target_point.y,
-    //                       ball_speed );
-    //         Body_KickOneStep( target_point, ball_speed ).execute( agent );
-    //         agent->setNeckAction( new Neck_ScanField() );
-    //         return;
-    //     }
-    // }
-
-    //
     // kick to the nearest teammate
     //
     {
@@ -185,7 +155,6 @@ Bhv_SetPlayFreeKick::doKick( PlayerAgent * agent )
                           ball_speed, ball_reach_step );
 
             Body_KickOneStep( target_point, ball_speed ).execute( agent );
-            agent->setNeckAction( new Neck_ScanField() );
             return;
         }
     }
@@ -201,7 +170,6 @@ Bhv_SetPlayFreeKick::doKick( PlayerAgent * agent )
                       __FILE__":  clear. turn to ball" );
 
         Body_TurnToBall().execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
         return;
     }
 
@@ -210,7 +178,6 @@ Bhv_SetPlayFreeKick::doKick( PlayerAgent * agent )
                   __FILE__":  clear" );
 
     Body_ClearBall().execute( agent );
-    agent->setNeckAction( new Neck_ScanField() );
 }
 
 /*-------------------------------------------------------------------*/
@@ -243,7 +210,6 @@ Bhv_SetPlayFreeKick::doKickWait( PlayerAgent * agent )
     if ( wm.time().stopped() != 0 )
     {
         Body_TurnToPoint( face_point ).execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
         return true;
     }
 
@@ -254,7 +220,6 @@ Bhv_SetPlayFreeKick::doKickWait( PlayerAgent * agent )
                       __FILE__": (doKickWait) delaying" );
 
         Body_TurnToPoint( face_point ).execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
         return true;
     }
 
@@ -265,7 +230,6 @@ Bhv_SetPlayFreeKick::doKickWait( PlayerAgent * agent )
                       __FILE__": (doKickWait) no teammate" );
 
         Body_TurnToPoint( face_point ).execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
         return true;
     }
 
@@ -274,7 +238,6 @@ Bhv_SetPlayFreeKick::doKickWait( PlayerAgent * agent )
         agent->debugClient().addMessage( "FreeKick:Wait%d", wm.setplayCount() );
 
         Body_TurnToPoint( face_point ).execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
         return true;
     }
 
@@ -293,7 +256,6 @@ Bhv_SetPlayFreeKick::doKickWait( PlayerAgent * agent )
         agent->debugClient().addMessage( "FreeKick:Turn" );
 
         Body_TurnToPoint( face_point ).execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
         return true;
     }
 
@@ -301,7 +263,6 @@ Bhv_SetPlayFreeKick::doKickWait( PlayerAgent * agent )
          || wm.self().stamina() < ServerParam::i().staminaMax() * 0.9 )
     {
         Body_TurnToBall().execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
 
         agent->debugClient().addMessage( "FreeKick:Wait%d", wm.setplayCount() );
         dlog.addText( Logger::TEAM,
@@ -391,5 +352,4 @@ Bhv_SetPlayFreeKick::doMove( PlayerAgent * agent )
         }
     }
 
-    agent->setNeckAction( new Neck_TurnToBallOrScan() );
 }

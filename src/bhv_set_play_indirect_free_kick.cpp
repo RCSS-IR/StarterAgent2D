@@ -42,8 +42,6 @@
 #include <rcsc/action/body_go_to_point.h>
 #include <rcsc/action/body_kick_one_step.h>
 #include <rcsc/action/body_kick_collide_with_ball.h>
-#include <rcsc/action/neck_scan_field.h>
-#include <rcsc/action/neck_turn_to_ball_or_scan.h>
 #include <rcsc/action/body_clear_ball.h>
 
 #include <rcsc/player/player_agent.h>
@@ -134,12 +132,10 @@ Bhv_SetPlayIndirectFreeKick::doKicker( PlayerAgent * agent )
     if ( wm.setplayCount() <= 3 )
     {
         Body_TurnToPoint( Vector2D( 50.0, 0.0 ) ).execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
         return;
     }
 
     Body_ClearBall2009().execute(agent);
-    agent->setNeckAction( new Neck_ScanField() );
     return;
 
 }
@@ -162,7 +158,6 @@ Bhv_SetPlayIndirectFreeKick::doKickWait( PlayerAgent * agent )
                       __FILE__": (doKickWait) stoppage time" );
 
         Body_TurnToPoint( face_point ).execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
         return true;
     }
 
@@ -175,7 +170,6 @@ Bhv_SetPlayIndirectFreeKick::doKickWait( PlayerAgent * agent )
         agent->debugClient().setTarget( face_point );
 
         Body_TurnToPoint( face_point ).execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
         return true;
     }
 
@@ -189,7 +183,6 @@ Bhv_SetPlayIndirectFreeKick::doKickWait( PlayerAgent * agent )
         agent->debugClient().setTarget( face_point );
 
         Body_TurnToPoint( face_point ).execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
         return true;
     }
 
@@ -301,8 +294,6 @@ Bhv_SetPlayIndirectFreeKick::doOffenseMove( PlayerAgent * agent )
                       __FILE__":  our kick. turn to (%.1f %.1f)",
                       turn_point.x, turn_point.y );
     }
-
-    agent->setNeckAction( new Neck_TurnToBallOrScan() );
 }
 
 /*-------------------------------------------------------------------*/
@@ -402,6 +393,4 @@ Bhv_SetPlayIndirectFreeKick::doDefenseMove( PlayerAgent * agent )
         dlog.addText( Logger::TEAM,
                       __FILE__":  their kick. turn to ball" );
     }
-
-    agent->setNeckAction( new Neck_TurnToBall() );
 }

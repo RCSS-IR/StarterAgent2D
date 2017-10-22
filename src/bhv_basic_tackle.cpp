@@ -30,9 +30,6 @@
 
 #include "bhv_basic_tackle.h"
 
-#include <rcsc/action/neck_turn_to_ball_or_scan.h>
-#include <rcsc/action/neck_turn_to_point.h>
-
 #include <rcsc/player/player_agent.h>
 #include <rcsc/player/debug_client.h>
 #include <rcsc/player/intercept_table.h>
@@ -158,7 +155,6 @@ Bhv_BasicTackle::executeV14( PlayerAgent * agent,
     double tackle_dir = ( result.tackle_angle_ - wm.self().body() ).degree();
 
     agent->doTackle( tackle_dir, use_foul );
-    agent->setNeckAction( new Neck_TurnToPoint( ball_next ) );
 
     return true;
 }

@@ -41,8 +41,6 @@
 #include <rcsc/action/body_go_to_point.h>
 #include <rcsc/action/body_kick_one_step.h>
 #include <rcsc/action/body_kick_collide_with_ball.h>
-#include <rcsc/action/neck_scan_field.h>
-#include <rcsc/action/neck_turn_to_ball_or_scan.h>
 
 #include <rcsc/player/player_agent.h>
 #include <rcsc/player/debug_client.h>
@@ -158,7 +156,6 @@ Bhv_SetPlayKickIn::doKick( PlayerAgent * agent )
             Body_KickOneStep( target_point,
                               ball_speed
                               ).execute( agent );
-            agent->setNeckAction( new Neck_ScanField() );
             return;
         }
     }
@@ -174,7 +171,6 @@ Bhv_SetPlayKickIn::doKick( PlayerAgent * agent )
                       __FILE__":  clear. turn to ball" );
 
         Body_TurnToBall().execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
         return;
     }
 
@@ -200,7 +196,6 @@ Bhv_SetPlayKickIn::doKick( PlayerAgent * agent )
         Body_KickOneStep( target_point,
                           ServerParam::i().ballSpeedMax()
                           ).execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
     }
 }
 
@@ -231,7 +226,6 @@ Bhv_SetPlayKickIn::doKickWait( PlayerAgent * agent )
                       __FILE__": (doKickWait) delaying" );
 
         Body_TurnToPoint( Vector2D( 0.0, 0.0 ) ).execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
         return true;
     }
 
@@ -242,7 +236,6 @@ Bhv_SetPlayKickIn::doKickWait( PlayerAgent * agent )
                       __FILE__": (doKickWait) no teammate" );
 
         Body_TurnToPoint( Vector2D( 0.0, 0.0 ) ).execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
         return true;
     }
 
@@ -253,7 +246,6 @@ Bhv_SetPlayKickIn::doKickWait( PlayerAgent * agent )
                       __FILE__": (doKickWait) wait teammates" );
 
         Body_TurnToBall().execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
         return true;
     }
 
@@ -271,7 +263,6 @@ Bhv_SetPlayKickIn::doKickWait( PlayerAgent * agent )
          || wm.self().stamina() < 8000 )
     {
         Body_TurnToBall().execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
 
         agent->debugClient().addMessage( "KickIn:Wait%d", wm.setplayCount() );
         dlog.addText( Logger::TEAM,
@@ -313,18 +304,4 @@ Bhv_SetPlayKickIn::doMove( PlayerAgent * agent )
             Body_TurnToBall().execute( agent );
     }
 
-    if ( kicker_ball_dist > 3.0 )
-    {
-        agent->setViewAction( new View_Wide() );
-        agent->setNeckAction( new Neck_ScanField() );
-    }
-    else if ( wm.ball().distFromSelf() > 10.0
-              || kicker_ball_dist > 1.0 )
-    {
-        agent->setNeckAction( new Neck_TurnToBallOrScan() );
-    }
-    else
-    {
-        agent->setNeckAction( new Neck_TurnToBall() );
-    }
 }

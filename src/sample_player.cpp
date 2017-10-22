@@ -53,8 +53,6 @@
 #include <rcsc/action/body_go_to_point.h>
 #include <rcsc/action/body_intercept.h>
 #include <rcsc/action/body_kick_one_step.h>
-#include <rcsc/action/neck_scan_field.h>
-#include <rcsc/action/neck_turn_to_ball_or_scan.h>
 #include <rcsc/action/view_synch.h>
 
 #include <rcsc/action/kick_table.h>
@@ -234,7 +232,6 @@ SamplePlayer::actionImpl()
                  && our_penalty.contains( this->world().ball().pos() ) )
             {
                 this->doCatch();
-                this->setNeckAction( new Neck_TurnToBall() );
             }
             else if ( this->world().self().isKickable() )
             {
@@ -448,7 +445,6 @@ SamplePlayer::doPreprocess()
         wm.self().tackleExpires() );
         // face neck to ball
         this->setViewAction( new View_Tactical() );
-        this->setNeckAction( new Neck_TurnToBallOrScan() );
         return true;
     }
 
@@ -572,7 +568,6 @@ SamplePlayer::doForceKick()
         Body_KickOneStep( goal_pos,
         ServerParam::i().ballSpeedMax()
         ).execute( this );
-        this->setNeckAction( new Neck_ScanField() );
         return true;
     }
 
@@ -617,7 +612,6 @@ SamplePlayer::doHeardPassReceive()
         self_min );
         this->debugClient().addMessage( "Comm:Receive:Intercept" );
         Body_Intercept().execute( this );
-        this->setNeckAction( new Neck_TurnToBall() );
     }
     else
     {
@@ -630,7 +624,6 @@ SamplePlayer::doHeardPassReceive()
         0.5,
         ServerParam::i().maxDashPower()
         ).execute( this );
-        this->setNeckAction( new Neck_TurnToBall() );
     }
 
     this->setIntention( new IntentionReceive( heard_pos,

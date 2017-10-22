@@ -31,7 +31,6 @@
 #include "bhv_custom_before_kick_off.h"
 
 #include <rcsc/action/bhv_scan_field.h>
-#include <rcsc/action/neck_turn_to_relative.h>
 
 #include <rcsc/player/player_agent.h>
 #include <rcsc/common/server_param.h>
@@ -55,7 +54,6 @@ Bhv_CustomBeforeKickOff::execute( PlayerAgent * agent )
          && wm.time().stopped() < 5 )
     {
         agent->doTurn( 0.0 );
-        agent->setNeckAction( new Neck_TurnToRelative( 0.0 ) );
         return false;
     }
 
@@ -63,7 +61,6 @@ Bhv_CustomBeforeKickOff::execute( PlayerAgent * agent )
          && wm.self().vel().r() > 0.05 )
     {
         agent->doTurn( 180.0 );
-        agent->setNeckAction( new Neck_TurnToRelative( 0.0 ) );
         return true;
     }
 
@@ -176,7 +173,6 @@ Bhv_CustomBeforeKickOff::execute( PlayerAgent * agent )
     if ( tmpr > 1.0 )
     {
         agent->doMove( M_move_point.x, M_move_point.y );
-        agent->setNeckAction( new Neck_TurnToRelative( 0.0 ) );
         return true;
     }
 

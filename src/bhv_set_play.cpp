@@ -44,8 +44,6 @@
 #include <rcsc/action/bhv_before_kick_off.h>
 #include <rcsc/action/bhv_scan_field.h>
 #include <rcsc/action/body_go_to_point.h>
-#include <rcsc/action/neck_scan_field.h>
-#include <rcsc/action/neck_turn_to_ball_or_scan.h>
 
 #include <rcsc/player/player_agent.h>
 #include <rcsc/player/debug_client.h>

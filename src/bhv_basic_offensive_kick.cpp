@@ -31,8 +31,6 @@
 #include "bhv_basic_offensive_kick.h"
 
 #include <rcsc/action/body_hold_ball.h>
-#include <rcsc/action/neck_scan_field.h>
-#include <rcsc/action/neck_turn_to_low_conf_teammate.h>
 #include <rcsc/action/body_smart_kick.h>
 
 #include <rcsc/player/player_agent.h>
@@ -91,7 +89,6 @@ Bhv_BasicOffensiveKick::execute( PlayerAgent * agent )
                       __FILE__": hold" );
         agent->debugClient().addMessage( "OffKickHold" );
         Body_HoldBall().execute( agent );
-        agent->setNeckAction( new Neck_TurnToLowConfTeammate() );
         return true;
     }
 
@@ -112,7 +109,6 @@ bool Bhv_BasicOffensiveKick::shoot( rcsc::PlayerAgent * agent ){
 	}else{
 		Body_SmartKick(right_goal,3,0.1,3).execute(agent);
 	}
-	agent->setNeckAction( new Neck_ScanField() );
 	return true;
 }
 
@@ -143,7 +139,6 @@ bool Bhv_BasicOffensiveKick::pass(PlayerAgent * agent){
 		Body_SmartKick(best_target,3,2.9,1).execute(agent);
 	else
 		Body_SmartKick(best_target,3,2.9,3).execute(agent);
-	agent->setNeckAction( new Neck_ScanField() );
 	return true;
 }
 
@@ -155,7 +150,6 @@ bool Bhv_BasicOffensiveKick::dribble(PlayerAgent * agent){
 	if(!wm.existOpponentIn(dribble_sector,5,true)){
 		Vector2D target = Vector2D::polar2vector(3,dribble_angle) + ball_pos;
 		if(Body_SmartKick(target,0.8,0.7,2).execute(agent)){
-			agent->setNeckAction( new Neck_ScanField() );
 			return true;
 		}
 	}

@@ -38,8 +38,6 @@
 
 #include <rcsc/action/basic_actions.h>
 #include <rcsc/action/body_go_to_point.h>
-#include <rcsc/action/neck_scan_field.h>
-#include <rcsc/action/neck_turn_to_ball_or_scan.h>
 
 #include <rcsc/player/player_agent.h>
 #include <rcsc/player/intercept_table.h>
@@ -88,7 +86,6 @@ Bhv_TheirGoalKickMove::execute( PlayerAgent * agent )
         // already there
         Body_TurnToBall().execute( agent );
     }
-    agent->setNeckAction( new Neck_ScanField() );
     return true;
 }
 

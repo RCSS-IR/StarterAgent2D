@@ -45,8 +45,6 @@
 #include <rcsc/action/basic_actions.h>
 #include <rcsc/action/body_go_to_point.h>
 #include <rcsc/action/body_kick_one_step.h>
-#include <rcsc/action/neck_scan_field.h>
-#include <rcsc/action/neck_turn_to_ball_or_scan.h>
 
 #include <rcsc/player/player_agent.h>
 #include <rcsc/player/say_message_builder.h>
@@ -112,7 +110,6 @@ Bhv_SetPlayGoalKick::doKick( PlayerAgent * agent )
     }
 
     Body_ClearBall().execute( agent );
-    agent->setNeckAction( new Neck_ScanField() );
 }
 
 /*-------------------------------------------------------------------*/
@@ -142,7 +139,6 @@ Bhv_SetPlayGoalKick::doKickWait( PlayerAgent * agent )
                       __FILE__": (doKickWait) delaying" );
 
         Body_TurnToBall().execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
         return true;
     }
 
@@ -151,7 +147,6 @@ Bhv_SetPlayGoalKick::doKickWait( PlayerAgent * agent )
     {
         agent->debugClient().addMessage( "GoalKick:TurnToBall" );
         Body_TurnToBall().execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
         return true;
     }
 
@@ -159,7 +154,6 @@ Bhv_SetPlayGoalKick::doKickWait( PlayerAgent * agent )
     {
         agent->debugClient().addMessage( "GoalKick:Wait%d", wm.setplayCount() );
         Body_TurnToBall().execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
         return true;
     }
 
@@ -168,7 +162,6 @@ Bhv_SetPlayGoalKick::doKickWait( PlayerAgent * agent )
     {
         agent->debugClient().addMessage( "GoalKick:NoTeammate%d", wm.setplayCount() );
         Body_TurnToBall().execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
         return true;
     }
 
@@ -187,7 +180,6 @@ Bhv_SetPlayGoalKick::doKickWait( PlayerAgent * agent )
          || wm.self().stamina() < ServerParam::i().staminaMax() * 0.9 )
     {
         Body_TurnToBall().execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
 
         agent->debugClient().addMessage( "GoalKick:Wait%d", wm.setplayCount() );
         dlog.addText( Logger::TEAM,
@@ -250,7 +242,6 @@ Bhv_SetPlayGoalKick::doIntercept( PlayerAgent * agent )
                       __FILE__": (doIntercept) intercept" );
 
         Body_Intercept().execute( agent );
-        agent->setNeckAction( new Neck_ScanField() );
         return true;
     }
 
@@ -289,5 +280,4 @@ Bhv_SetPlayGoalKick::doMove( PlayerAgent * agent )
         // already there
         Body_TurnToBall().execute( agent );
     }
-    agent->setNeckAction( new Neck_ScanField() );
 }

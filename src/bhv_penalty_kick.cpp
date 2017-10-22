@@ -44,7 +44,6 @@
 #include <rcsc/action/body_kick_one_step.h>
 #include <rcsc/action/body_stop_dash.h>
 #include <rcsc/action/body_stop_ball.h>
-#include <rcsc/action/neck_scan_field.h>
 
 #include <rcsc/player/player_agent.h>
 #include <rcsc/player/intercept_table.h>
@@ -176,7 +175,6 @@ Bhv_PenaltyKick::doKickerWait( PlayerAgent * agent )
                         0.3,
                         ServerParam::i().maxDashPower()
                         ).execute( agent );
-        agent->setNeckAction( new Neck_TurnToRelative( 0.0 ) );
     }
 
     return true;
@@ -197,14 +195,6 @@ Bhv_PenaltyKick::doKickerSetup( PlayerAgent * agent )
     if ( ! Bhv_GoToStaticBall( place_angle ).execute( agent ) )
     {
         Body_TurnToPoint( goal_c ).execute( agent );
-        if ( opp_goalie )
-        {
-            agent->setNeckAction( new Neck_TurnToPoint( opp_goalie->pos() ) );
-        }
-        else
-        {
-            agent->setNeckAction( new Neck_TurnToPoint( goal_c ) );
-        }
     }
 
     return true;
@@ -261,19 +251,10 @@ Bhv_PenaltyKick::doKicker( PlayerAgent * agent )
 
         if ( wm.ball().posCount() > 0 )
         {
-            agent->setNeckAction( new Neck_TurnToBall() );
         }
         else
         {
             const PlayerObject * opp_goalie = agent->world().getOpponentGoalie();
-            if ( opp_goalie )
-            {
-                agent->setNeckAction( new Neck_TurnToPoint( opp_goalie->pos() ) );
-            }
-            else
-            {
-                agent->setNeckAction( new Neck_ScanField() );
-            }
         }
 
         return true;
@@ -324,7 +305,6 @@ bool
 Bhv_PenaltyKick::doGoalieWait( PlayerAgent* agent )
 {
     Body_TurnToBall().execute( agent );
-    agent->setNeckAction( new Neck_TurnToBall() );
     return true;
 }
 
@@ -343,7 +323,6 @@ Bhv_PenaltyKick::doGoalieSetup( PlayerAgent * agent )
                          ServerParam::i().maxDashPower()
                          ).execute( agent ) )
     {
-        agent->setNeckAction( new Neck_TurnToBall() );
         return true;
     }
 
@@ -353,8 +332,6 @@ Bhv_PenaltyKick::doGoalieSetup( PlayerAgent * agent )
         Vector2D face_point( 0.0, 0.0 );
         Body_TurnToPoint( face_point ).execute( agent );
     }
-
-    agent->setNeckAction( new Neck_TurnToBall() );
 
     return true;
 }
@@ -387,7 +364,6 @@ Bhv_PenaltyKick::doGoalie( PlayerAgent* agent )
     if ( wm.self().isKickable() )
     {
         Body_ClearBall().execute( agent );
-        agent->setNeckAction( new Neck_TurnToBall() );
         return true;
     }
 

@@ -37,7 +37,6 @@
 
 #include <rcsc/action/basic_actions.h>
 #include <rcsc/action/body_kick_one_step.h>
-#include <rcsc/action/neck_scan_field.h>
 
 #include <rcsc/player/player_agent.h>
 #include <rcsc/player/debug_client.h>
@@ -98,7 +97,6 @@ Bhv_GoalieFreeKick::execute( rcsc::PlayerAgent * agent )
         s_second_move = false;
         s_second_wait_count = 0;
         agent->doMove( move_target.x, move_target.y );
-        agent->setNeckAction( new rcsc::Neck_ScanField );
         return true;
     }
 
@@ -124,7 +122,6 @@ Bhv_GoalieFreeKick::execute( rcsc::PlayerAgent * agent )
     {
         rcsc::Vector2D kick_point = getKickPoint( agent );
         agent->doMove( kick_point.x, kick_point.y );
-        agent->setNeckAction( new rcsc::Neck_ScanField );
         s_second_move = true;
         s_second_wait_count = 0;
         return true;
@@ -209,7 +206,6 @@ Bhv_GoalieFreeKick::doKick( rcsc::PlayerAgent * agent )
         return;
     }
     rcsc::Body_ClearBall().execute( agent );
-    agent->setNeckAction( new rcsc::Neck_ScanField() );
 }
 
 /*-------------------------------------------------------------------*/
@@ -232,5 +228,4 @@ Bhv_GoalieFreeKick::doWait( rcsc::PlayerAgent * agent )
     }
 
     rcsc::Body_TurnToPoint( face_target ).execute( agent );
-    agent->setNeckAction( new rcsc::Neck_ScanField() );
 }

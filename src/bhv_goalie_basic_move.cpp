@@ -31,7 +31,6 @@
 #include "bhv_goalie_basic_move.h"
 
 #include "bhv_basic_tackle.h"
-#include "neck_goalie_turn_neck.h"
 
 #include <rcsc/action/basic_actions.h>
 #include <rcsc/action/body_go_to_point.h>
@@ -74,8 +73,6 @@ Bhv_GoalieBasicMove::execute( PlayerAgent * agent )
 
     if (!Body_GoToPoint2010(move_point,1.0,100).execute(agent))
         Body_TurnToPoint(move_point).execute(agent);
-
-    agent->setNeckAction( new Neck_GoalieTurnNeck() );
 
     return true;
 }
