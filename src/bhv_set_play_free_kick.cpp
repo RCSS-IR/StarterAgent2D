@@ -37,11 +37,11 @@
 #include "bhv_go_to_static_ball.h"
 
 #include "intention_wait_after_set_play_kick.h"
+#include "bhv_basic_offensive_kick.h"
 
 #include <rcsc/action/basic_actions.h>
 #include <rcsc/action/body_go_to_point.h>
 #include <rcsc/action/body_kick_one_step.h>
-#include <rcsc/action/body_clear_ball.h>
 
 #include <rcsc/player/player_agent.h>
 #include <rcsc/player/debug_client.h>
@@ -177,7 +177,7 @@ Bhv_SetPlayFreeKick::doKick( PlayerAgent * agent )
     dlog.addText( Logger::TEAM,
                   __FILE__":  clear" );
 
-    Body_ClearBall().execute( agent );
+    Bhv_BasicOffensiveKick().clearball(agent);
 }
 
 /*-------------------------------------------------------------------*/

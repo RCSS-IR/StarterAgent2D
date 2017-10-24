@@ -32,7 +32,7 @@
 
 #include <rcsc/action/body_hold_ball.h>
 #include <rcsc/action/body_smart_kick.h>
-
+#include <rcsc/action/body_stop_ball.h>
 #include <rcsc/player/player_agent.h>
 #include <rcsc/player/debug_client.h>
 
@@ -91,7 +91,7 @@ Bhv_BasicOffensiveKick::execute( PlayerAgent * agent )
         Body_HoldBall().execute( agent );
         return true;
     }
-
+    clearball(agent);
     return true;
 }
 
@@ -154,4 +154,40 @@ bool Bhv_BasicOffensiveKick::dribble(PlayerAgent * agent){
 		}
 	}
 	return false;
+}
+
+bool Bhv_BasicOffensiveKick::clearball(PlayerAgent * agent){
+    const WorldModel & wm = agent->world();
+    if(!wm.self().isKickable())
+        return false;
+    Vector2D ball_pos = wm.ball().pos();
+    Vector2D target = Vector2D(52.5,0);
+    if(ball_pos.x < 0){
+        if(ball_pos.x > -25){
+            if(ball_pos.dist(Vector2D(0,-34)) < ball_pos.dist(Vector2D(0,+34))){
+                target = Vector2D(0,-34);
+            }else{
+                target = Vector2D(0,+34);
+            }
+        }else{
+            if(ball_pos.absY() < 10 && ball_pos.x < -10){
+                if(ball_pos.y > 0){
+                    target = Vector2D(-52,20);
+                }else{
+                    target = Vector2D(-52,-20);
+                }
+            }else{
+                if(ball_pos.y > 0){
+                    target = Vector2D(ball_pos.x,34);
+                }else{
+                    target = Vector2D(ball_pos.x,-34);
+                }
+            }
+        }
+    }
+    if(Body_SmartKick(target,2.7,2.7,2).execute(agent)){
+        return true;
+    }
+    Body_StopBall().execute(agent);
+    return true;
 }

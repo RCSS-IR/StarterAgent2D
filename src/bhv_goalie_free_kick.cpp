@@ -33,7 +33,6 @@
 #include "bhv_goalie_basic_move.h"
 
 #include "bhv_basic_offensive_kick.h"
-#include <rcsc/action/body_clear_ball.h>
 
 #include <rcsc/action/basic_actions.h>
 #include <rcsc/action/body_kick_one_step.h>
@@ -205,7 +204,7 @@ Bhv_GoalieFreeKick::doKick( rcsc::PlayerAgent * agent )
     if(Bhv_BasicOffensiveKick().pass(agent)){
         return;
     }
-    rcsc::Body_ClearBall().execute( agent );
+    Bhv_BasicOffensiveKick().clearball(agent);
 }
 
 /*-------------------------------------------------------------------*/

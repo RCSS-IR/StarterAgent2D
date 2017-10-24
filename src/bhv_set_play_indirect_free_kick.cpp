@@ -42,7 +42,6 @@
 #include <rcsc/action/body_go_to_point.h>
 #include <rcsc/action/body_kick_one_step.h>
 #include <rcsc/action/body_kick_collide_with_ball.h>
-#include <rcsc/action/body_clear_ball.h>
 
 #include <rcsc/player/player_agent.h>
 #include <rcsc/player/debug_client.h>
@@ -135,7 +134,7 @@ Bhv_SetPlayIndirectFreeKick::doKicker( PlayerAgent * agent )
         return;
     }
 
-    Body_ClearBall2009().execute(agent);
+    Bhv_BasicOffensiveKick().clearball(agent);
     return;
 
 }

@@ -38,7 +38,6 @@
 
 #include "intention_wait_after_set_play_kick.h"
 
-#include <rcsc/action/body_clear_ball.h>
 #include <rcsc/action/body_stop_ball.h>
 #include <rcsc/action/body_intercept.h>
 
@@ -109,7 +108,7 @@ Bhv_SetPlayGoalKick::doKick( PlayerAgent * agent )
         return;
     }
 
-    Body_ClearBall().execute( agent );
+    Bhv_BasicOffensiveKick().clearball(agent);
 }
 
 /*-------------------------------------------------------------------*/

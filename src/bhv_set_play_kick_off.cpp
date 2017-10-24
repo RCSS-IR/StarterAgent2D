@@ -40,7 +40,6 @@
 #include <rcsc/action/body_smart_kick.h>
 
 #include <rcsc/action/basic_actions.h>
-#include <rcsc/action/body_clear_ball.h>
 #include <rcsc/action/body_go_to_point.h>
 
 #include <rcsc/player/player_agent.h>
@@ -124,7 +123,7 @@ Bhv_SetPlayKickOff::doKick( PlayerAgent * agent )
             return;
     }
 
-    Body_ClearBall2009().execute(agent);
+    Bhv_BasicOffensiveKick().clearball(agent);
 }
 
 /*-------------------------------------------------------------------*/

@@ -41,6 +41,7 @@ public:
     bool pass_to_forward( rcsc::PlayerAgent * agent );
     bool pass( rcsc::PlayerAgent * agent );
     bool dribble( rcsc::PlayerAgent * agent );
+    bool clearball( rcsc::PlayerAgent * agent );
 };
 
 #endif

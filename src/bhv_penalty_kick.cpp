@@ -34,7 +34,7 @@
 #include "bhv_go_to_static_ball.h"
 #include "bhv_goalie_basic_move.h"
 
-#include <rcsc/action/body_clear_ball.h>
+#include <rcsc/action.h>
 #include <rcsc/action/body_intercept.h>
 #include <rcsc/action/body_smart_kick.h>
 
@@ -363,7 +363,7 @@ Bhv_PenaltyKick::doGoalie( PlayerAgent* agent )
 
     if ( wm.self().isKickable() )
     {
-        Body_ClearBall().execute( agent );
+        Bhv_BasicOffensiveKick().clearball(agent);
         return true;
     }
 
