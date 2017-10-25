@@ -74,9 +74,6 @@ AC_CHECK_LIB([rcsc_time], [main],
 AC_CHECK_LIB([rcsc_net], [main],
              [LIBS="-lrcsc_net $LIBS"],
              [AC_MSG_ERROR([*** -lrcsc_time not found! ***])])
-AC_CHECK_LIB([rcsc_ann], [main],
-             [LIBS="-lrcsc_ann $LIBS"],
-             [AC_MSG_ERROR([*** -lrcsc_ann not found! ***])])
 AC_CHECK_LIB([rcsc_agent], [main],
              [LIBS="-lrcsc_agent $LIBS"],
              [AC_MSG_ERROR([*** -lrcsc_agent not found! ***])])
