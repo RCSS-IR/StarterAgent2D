@@ -113,7 +113,6 @@ private:
     int predictOpponentReachStep( const rcsc::AbstractPlayerObject * opponent,
                                   const rcsc::Vector2D & first_ball_pos,
                                   const rcsc::Vector2D & first_ball_vel,
-                                  const rcsc::AngleDeg & ball_move_angle,
                                   const int max_cycle );
     static
     int predict_player_turn_cycle( const rcsc::PlayerType * player_type,

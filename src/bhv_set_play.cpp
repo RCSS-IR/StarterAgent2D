@@ -32,19 +32,14 @@
 
 #include "bhv_basic_move.h"
 
+#include "bhv_basic_offensive_kick.h"
 #include "bhv_goalie_free_kick.h"
-#include "bhv_set_play_free_kick.h"
-#include "bhv_set_play_goal_kick.h"
-#include "bhv_set_play_kick_off.h"
-#include "bhv_set_play_kick_in.h"
-#include "bhv_set_play_indirect_free_kick.h"
-#include "bhv_their_goal_kick_move.h"
 
 #include <rcsc/action/basic_actions.h>
 #include <rcsc/action/bhv_before_kick_off.h>
 #include <rcsc/action/bhv_scan_field.h>
 #include <rcsc/action/body_go_to_point.h>
-
+#include <rcsc/action/body_kick_one_step.h>
 #include <rcsc/player/player_agent.h>
 #include <rcsc/player/debug_client.h>
 
@@ -69,6 +64,38 @@ using namespace rcsc;
 
  */
 
+
+bool
+Bhv_SetPlay::execute( PlayerAgent * agent )
+{
+    dlog.addText( Logger::TEAM,
+                  __FILE__": Bhv_SetPlay" );
+
+    const WorldModel & wm = agent->world();
+    if ( wm.self().goalie() )
+    {
+        if ( wm.gameMode().type() != GameMode::BackPass_
+             && wm.gameMode().type() != GameMode::IndFreeKick_ )
+        {
+            Bhv_GoalieFreeKick().execute( agent );
+            return true;
+        }
+
+    }
+
+    if ( wm.gameMode().side() == wm.ourSide() ){
+        if (is_kicker(agent)){
+            doKick(agent);
+        }else{
+            doMove(agent);
+        }
+    }else{
+        doMove(agent);
+    }
+    return true;
+
+}
+
 void
 Bhv_SetPlay::doMove( PlayerAgent * agent )
 {
@@ -76,8 +103,13 @@ Bhv_SetPlay::doMove( PlayerAgent * agent )
 
     Vector2D target_point = Bhv_BasicMove().getPosition( wm, wm.self().unum() );
     if(target_point.x > wm.offsideLineX())
-        target_point= wm.offsideLineX() - 1.0;
-    double dash_power = Bhv_SetPlay::get_set_play_dash_power( agent );
+        target_point.x = wm.offsideLineX() - 1.0;
+
+    if(wm.gameMode().side() != wm.ourSide())
+        if(!can_go_to(-11,wm,Circle2D(wm.ball().pos(),11.0),target_point))
+            target_point = get_avoid_circle_point(wm,target_point);
+
+    double dash_power = get_set_play_dash_power( agent );
 
     double dist_thr = wm.ball().distFromSelf() * 0.07;
     if ( dist_thr < 1.0 ) dist_thr = 1.0;
@@ -90,7 +122,7 @@ Bhv_SetPlay::doMove( PlayerAgent * agent )
                            dash_power
                            ).execute( agent ) )
     {
-            Body_TurnToBall().execute( agent );
+        Body_TurnToBall().execute( agent );
     }
 
 }
@@ -105,7 +137,7 @@ Bhv_SetPlay::doKick( PlayerAgent * agent )
     AngleDeg ball_place_angle = ( wm.ball().pos().y > 0.0
                                   ? -90.0
                                   : 90.0 );
-    if ( Bhv_GoToStaticBall( ball_place_angle ).execute( agent ) )
+    if ( GoToStaticBall( agent, ball_place_angle ) )
     {
         return;
     }
@@ -120,17 +152,11 @@ Bhv_SetPlay::doKick( PlayerAgent * agent )
     }
 
     //
-    // kick
-    //
-
-    const double max_ball_speed = wm.self().kickRate() * ServerParam::i().maxPower();
-
-    //
     // pass
     //
 
     if(Bhv_BasicOffensiveKick().pass(agent)){
-          return;
+        return;
     }
     //
     // kick to the nearest teammate
@@ -147,7 +173,7 @@ Bhv_SetPlay::doKick( PlayerAgent * agent )
 
             double ball_move_dist = wm.ball().pos().dist( target_point );
             int ball_reach_step
-                = ball_move_dist / 2.5;
+                    = ball_move_dist / 2.5;
             double ball_speed = 0.0;
             if ( ball_reach_step > 3 )
             {
@@ -212,105 +238,74 @@ Bhv_SetPlay::doKick( PlayerAgent * agent )
 }
 
 bool
-Bhv_SetPlay::execute( PlayerAgent * agent )
+Bhv_SetPlay::doKickWait( PlayerAgent * agent )
 {
-    dlog.addText( Logger::TEAM,
-                  __FILE__": Bhv_SetPlay" );
-
     const WorldModel & wm = agent->world();
-    if ( wm.self().goalie() )
-    {
-        if ( wm.gameMode().type() != GameMode::BackPass_
-             && wm.gameMode().type() != GameMode::IndFreeKick_ )
-        {
-            Bhv_GoalieFreeKick().execute( agent );
-        }
-        else
-        {
-            Bhv_SetPlayIndirectFreeKick().execute( agent );
-        }
 
+    const int real_set_play_count
+            = static_cast< int >( wm.time().cycle() - wm.lastSetPlayStartTime().cycle() );
+
+    if ( real_set_play_count >= ServerParam::i().dropBallTime() - 5 )
+    {
+        dlog.addText( Logger::TEAM,
+                      __FILE__": (doKickWait) real set play count = %d > drop_time-10, force kick mode",
+                      real_set_play_count );
+        return false;
+    }
+
+    if ( Bhv_SetPlay::is_delaying_tactics_situation( agent ) )
+    {
+        agent->debugClient().addMessage( "KickIn:Delaying" );
+        dlog.addText( Logger::TEAM,
+                      __FILE__": (doKickWait) delaying" );
+
+        Body_TurnToPoint( Vector2D( 0.0, 0.0 ) ).execute( agent );
         return true;
     }
 
-    if ( wm.gameMode().side() == wm.ourSide() ){
-        if (is_kicker(agent)){
-            doKick(agent);
-        }else{
-            doMove(agent);
-        }
-    }else{
-        doMove(agent);
+    if ( wm.teammatesFromBall().empty() )
+    {
+        agent->debugClient().addMessage( "KickIn:NoTeammate" );
+        dlog.addText( Logger::TEAM,
+                      __FILE__": (doKickWait) no teammate" );
+
+        Body_TurnToPoint( Vector2D( 0.0, 0.0 ) ).execute( agent );
+        return true;
     }
-    return true;
 
-//    switch ( wm.gameMode().type() ) {
-//    case GameMode::KickOff_:
-//        if ( wm.gameMode().side() == wm.ourSide() )
-//        {
-//            return Bhv_SetPlayKickOff().execute( agent );
-//        }
-//        else
-//        {
-//            doBasicTheirSetPlayMove( agent );
-//            return true;
-//        }
-//        break;
-//    case GameMode::KickIn_:
-//    case GameMode::CornerKick_:
-//        if ( wm.gameMode().side() == wm.ourSide() )
-//        {
-//            return Bhv_SetPlayKickIn().execute( agent );
-//        }
-//        else
-//        {
-//            doBasicTheirSetPlayMove( agent );
-//            return true;
-//        }
-//        break;
-//    case GameMode::GoalKick_:
-//        if ( wm.gameMode().side() == wm.ourSide() )
-//        {
-//            return Bhv_SetPlayGoalKick().execute( agent );
-//        }
-//        else
-//        {
-//            return Bhv_TheirGoalKickMove().execute( agent );
-//        }
-//        break;
-//    case GameMode::BackPass_:
-//    case GameMode::IndFreeKick_:
-//    case GameMode::FoulCharge_:
-//    case GameMode::FoulPush_:
-//        return Bhv_SetPlayIndirectFreeKick().execute( agent );
-//        break;
-//#if 0
-//    case GameMode::FreeKick_:
-//    case GameMode::CornerKick_:
-//    case GameMode::GoalieCatch_: // after catch
-//    case GameMode::Offside_:
-//    case GameMode::FreeKickFault_:
-//    case GameMode::CatchFault_:
-//#endif
-//    default:
-//        break;
-//    }
+    if ( wm.setplayCount() <= 3 )
+    {
+        agent->debugClient().addMessage( "KickIn:Wait%d", wm.setplayCount() );
+        dlog.addText( Logger::TEAM,
+                      __FILE__": (doKickWait) wait teammates" );
 
-//    if ( wm.gameMode().isOurSetPlay( wm.ourSide() ) )
-//    {
-//        dlog.addText( Logger::TEAM,
-//                      __FILE__": our set play" );
-//        return Bhv_SetPlayFreeKick().execute( agent );
-//    }
-//    else
-//    {
-//        doBasicTheirSetPlayMove( agent );
-//        return true;
-//    }
+        Body_TurnToBall().execute( agent );
+        return true;
+    }
 
-//    return false;
+    if ( wm.setplayCount() >= 15
+         && wm.seeTime() == wm.time()
+         && wm.self().stamina() > 8000 )
+    {
+        dlog.addText( Logger::TEAM,
+                      __FILE__": (doKickWait) set play count = %d, force kick mode",
+                      wm.setplayCount() );
+        return false;
+    }
+
+    if ( wm.seeTime() != wm.time()
+         || wm.self().stamina() < 8000 )
+    {
+        Body_TurnToBall().execute( agent );
+
+        agent->debugClient().addMessage( "KickIn:Wait%d", wm.setplayCount() );
+        dlog.addText( Logger::TEAM,
+                      __FILE__": (doKickWait) no see or recover" );
+        return true;
+    }
+
+    return false;
 }
-
 /*-------------------------------------------------------------------*/
 /*!
 
@@ -318,7 +313,6 @@ Bhv_SetPlay::execute( PlayerAgent * agent )
 double
 Bhv_SetPlay::get_set_play_dash_power( const PlayerAgent * agent )
 {
-#if 1
     const WorldModel & wm = agent->world();
 
     if ( ! wm.gameMode().isOurSetPlay( wm.ourSide() ) )
@@ -352,41 +346,13 @@ Bhv_SetPlay::get_set_play_dash_power( const PlayerAgent * agent )
     }
 
     return wm.self().getSafetyDashPower( ServerParam::i().maxDashPower() );
-#else
-    if ( agent->world().gameMode().type() == GameMode::PenaltySetup_ )
-    {
-        return agent->world().self().getSafetyDashPower( ServerParam::i().maxDashPower() );
-    }
 
-    double rate;
-    if ( agent->world().self().stamina() > ServerParam::i().staminaMax() * 0.8 )
-    {
-        rate = 1.5
-                * agent->world().self().stamina()
-                / ServerParam::i().staminaMax();
-    }
-    else
-    {
-        rate = 0.9
-                * ( agent->world().self().stamina()
-                    - ServerParam::i().recoverDecThrValue() )
-                / ServerParam::i().staminaMax();
-        rate = std::max( 0.0, rate );
-    }
-
-    return ( agent->world().self().playerType().staminaIncMax()
-             * agent->world().self().recovery()
-             * rate );
-#endif
 }
 
-namespace {
-
-bool
-can_go_to( const int count,
-           const WorldModel & wm,
-           const Circle2D & ball_circle,
-           const Vector2D & target_point )
+bool Bhv_SetPlay::can_go_to( const int count,
+                             const WorldModel & wm,
+                             const Circle2D & ball_circle,
+                             const Vector2D & target_point )
 {
     Segment2D move_line( wm.self().pos(), target_point );
 
@@ -431,11 +397,8 @@ can_go_to( const int count,
     return false;
 }
 
-} // end noname namespace
 
-
-Vector2D
-Bhv_SetPlay::get_avoid_circle_point( const WorldModel & wm,
+Vector2D Bhv_SetPlay::get_avoid_circle_point( const WorldModel & wm,
                                      const Vector2D & target_point )
 {
     const ServerParam & SP = ServerParam::i();
@@ -640,98 +603,71 @@ Bhv_SetPlay::is_delaying_tactics_situation( const PlayerAgent * agent )
 }
 
 /*-------------------------------------------------------------------*/
-/*!
-  execute action
-*/
-void
-Bhv_SetPlay::doBasicTheirSetPlayMove( PlayerAgent * agent )
+
+bool
+Bhv_SetPlay::GoToStaticBall( PlayerAgent * agent, const AngleDeg & ball_place_angle)
 {
+    const double dir_margin = 15.0;
+
     const WorldModel & wm = agent->world();
 
-    Vector2D target_point = Bhv_BasicMove().getPosition( wm, wm.self().unum() );
+    AngleDeg angle_diff = wm.ball().angleFromSelf() - ball_place_angle;
 
-    if(wm.gameMode().type() == GameMode::BeforeKickOff)
-        target_point.x = (target_point.x > -1.0? -1.0:target_point.x);
-    dlog.addText( Logger::TEAM,
-                  __FILE__": their set play. HomePosition=(%.2f, %.2f)",
-                  target_point.x, target_point.y );
-
-    double dash_power = Bhv_SetPlay::get_set_play_dash_power( agent );
-
-    Vector2D ball_to_target = target_point - wm.ball().pos();
-
-    if ( ball_to_target.r() < 11.0 )
+    if ( angle_diff.abs() < dir_margin
+         && wm.ball().distFromSelf() < ( wm.self().playerType().playerSize()
+                                         + ServerParam::i().ballSize()
+                                         + 0.08 )
+         )
     {
-        double xdiff = std::sqrt( std::pow( 11.0, 2 ) - std::pow( ball_to_target.y, 2 ) );
-        target_point.x = wm.ball().pos().x - xdiff;
+        // already reach
+        return false;
+    }
 
+    // decide sub-target point
+    Vector2D sub_target = wm.ball().pos()
+            + Vector2D::polar2vector( 2.0, ball_place_angle + 180.0 );
+
+    double dash_power = 20.0;
+    double dash_speed = -1.0;
+    if ( wm.ball().distFromSelf() > 2.0 )
+    {
+        dash_power = Bhv_SetPlay::get_set_play_dash_power( agent );
+    }
+    else
+    {
+        dash_speed = wm.self().playerType().playerSize();
+        dash_power = wm.self().playerType().getDashPowerToKeepSpeed( dash_speed, wm.self().effort() );
+    }
+
+    // it is necessary to go to sub target point
+    if ( angle_diff.abs() > dir_margin )
+    {
         dlog.addText( Logger::TEAM,
-                      __FILE__": avoid circle(1). adjust x. x_diff=%.1f newPos=(%.2f %.2f)",
-                      xdiff,
-                      target_point.x, target_point.y );
-
-        if ( target_point.x < -45.0 )
+                      __FILE__": go to sub-target(%.1f, %.1f)",
+                      sub_target.x, sub_target.y );
+        Body_GoToPoint( sub_target,
+                        0.1,
+                        dash_power,
+                        dash_speed ).execute( agent );
+    }
+    // dir diff is small. go to ball
+    else
+    {
+        // body dir is not right
+        if ( ( wm.ball().angleFromSelf() - wm.self().body() ).abs() > 1.5 )
         {
-            target_point = wm.ball().pos();
-            target_point += ball_to_target.setLengthVector( 11.0 );
-
             dlog.addText( Logger::TEAM,
-                          __FILE__": avoid circle(2). adjust len. new_pos=(%.2f %.2f)",
-                          target_point.x, target_point.y );
+                          __FILE__": turn to ball" );
+            Body_TurnToBall().execute( agent );
+        }
+        // dash to ball
+        else
+        {
+            dlog.addText( Logger::TEAM,
+                          __FILE__": dash to ball" );
+            agent->doDash( dash_power );
         }
     }
 
-    //
-    // avoid kickoff offside
-    //
-    if ( wm.gameMode().type() == GameMode::KickOff_
-         && ServerParam::i().kickoffOffside() )
-    {
-        target_point.x = std::min( -1.0e-5, target_point.x );
-
-        dlog.addText( Logger::TEAM,
-                      __FILE__": avoid kickoff offside. (%.2f %.2f)",
-                      target_point.x, target_point.y );
-    }
-
-    //
-    // find sub target
-    //
-    dlog.addText( Logger::TEAM,
-                  __FILE__": find sub target to avoid ball circle" );
-    Vector2D adjusted_point = get_avoid_circle_point( wm, target_point );
-
-    //
-    // go to the target point
-    //
-    double dist_thr = wm.ball().distFromSelf() * 0.1;
-    if ( dist_thr < 0.7 ) dist_thr = 0.7;
-
-    if ( adjusted_point != target_point
-         && wm.ball().pos().dist( target_point ) > 10.0
-         && wm.self().inertiaFinalPoint().dist( adjusted_point ) < dist_thr )
-    {
-        dlog.addText( Logger::TEAM,
-                      __FILE__": reverted to the first target point" );
-        adjusted_point = target_point;
-    }
-
-    //agent->debugClient().addMessage( "GoTo" );
-    agent->debugClient().setTarget( target_point );
-    agent->debugClient().addCircle( target_point, dist_thr );
-
-    if ( ! Body_GoToPoint( adjusted_point,
-                           dist_thr,
-                           dash_power
-                           ).execute( agent ) )
-    {
-        // already there
-        AngleDeg body_angle = wm.ball().angleFromSelf();
-        if ( body_angle.degree() < 0.0 ) body_angle -= 90.0;
-        else body_angle += 90.0;
-
-        Body_TurnToAngle( body_angle ).execute( agent );
-    }
-
-    agent->setNeckAction( new Neck_TurnToBall() );
+    return true;
 }

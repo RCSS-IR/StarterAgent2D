@@ -140,7 +140,6 @@ IntentionReceive::execute( PlayerAgent * agent )
                   __FILE__": execute. try to receive" );
 
     int self_min = wm.interceptTable()->selfReachCycle();
-    int opp_min = wm.interceptTable()->opponentReachCycle();
 
     if ( self_min < 6 )
     {

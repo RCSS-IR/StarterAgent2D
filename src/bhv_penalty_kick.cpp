@@ -31,8 +31,7 @@
 #include "bhv_penalty_kick.h"
 #include "bhv_basic_offensive_kick.h"
 #include "bhv_goalie_basic_move.h"
-#include "bhv_go_to_static_ball.h"
-#include "bhv_goalie_basic_move.h"
+#include "bhv_set_play.h"
 
 #include <rcsc/action/body_intercept.h>
 #include <rcsc/action/body_smart_kick.h>
@@ -183,15 +182,15 @@ Bhv_PenaltyKick::doKickerWait( PlayerAgent * agent )
 /*!
 
  */
+
 bool
 Bhv_PenaltyKick::doKickerSetup( PlayerAgent * agent )
 {
     const Vector2D goal_c = ServerParam::i().theirTeamGoalPos();
-    const PlayerObject * opp_goalie = agent->world().getOpponentGoalie();
-    AngleDeg place_angle = 0.0;
 
     // ball is close enoughly.
-    if ( ! Bhv_GoToStaticBall( place_angle ).execute( agent ) )
+
+    if ( ! Bhv_SetPlay::GoToStaticBall(agent, 0.0) )
     {
         Body_TurnToPoint( goal_c ).execute( agent );
     }
@@ -248,14 +247,6 @@ Bhv_PenaltyKick::doKicker( PlayerAgent * agent )
                             ).execute( agent );
         }
 
-        if ( wm.ball().posCount() > 0 )
-        {
-        }
-        else
-        {
-            const PlayerObject * opp_goalie = agent->world().getOpponentGoalie();
-        }
-
         return true;
     }
 
@@ -275,9 +266,6 @@ Bhv_PenaltyKick::doKicker( PlayerAgent * agent )
 bool
 Bhv_PenaltyKick::doShoot( PlayerAgent * agent )
 {
-    const WorldModel & wm = agent->world();
-    const PenaltyKickState * state = wm.penaltyKickState();
-
     if(Bhv_BasicOffensiveKick().shoot(agent))
         return true;
 

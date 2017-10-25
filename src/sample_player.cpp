@@ -40,8 +40,6 @@
 
 #include "bhv_penalty_kick.h"
 #include "bhv_set_play.h"
-#include "bhv_set_play_kick_in.h"
-#include "bhv_set_play_indirect_free_kick.h"
 
 #include "bhv_custom_before_kick_off.h"
 
@@ -463,8 +461,8 @@ SamplePlayer::doPreprocess()
         KickOffPosition[6] = Vector2D(-15,0);
         KickOffPosition[7] = Vector2D(-15,-15);
         KickOffPosition[8] = Vector2D(-15,15);
-        KickOffPosition[9] = Vector2D(-5,-20);
-        KickOffPosition[10] = Vector2D(-5,20);
+        KickOffPosition[9] = Vector2D(-5,20);
+        KickOffPosition[10] = Vector2D(-5,-20);
         KickOffPosition[11] = Vector2D(-11,0);
         Vector2D move_point =  KickOffPosition.at( wm.self().unum() );
         Bhv_CustomBeforeKickOff( move_point ).execute( this );

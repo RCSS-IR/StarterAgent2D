@@ -68,9 +68,9 @@ Bhv_BasicOffensiveKick::execute( PlayerAgent * agent )
     const double nearest_opp_dist = ( nearest_opp
                                       ? nearest_opp->distFromSelf()
                                       : 1000.0 );
-    const Vector2D nearest_opp_pos = ( nearest_opp
-                                       ? nearest_opp->pos()
-                                       : Vector2D( -1000.0, 0.0 ) );
+//    const Vector2D nearest_opp_pos = ( nearest_opp
+//                                       ? nearest_opp->pos()
+//                                       : Vector2D( -1000.0, 0.0 ) );
 
     if(nearest_opp_dist < 10){
     	if(pass(agent))
@@ -105,9 +105,9 @@ bool Bhv_BasicOffensiveKick::shoot( rcsc::PlayerAgent * agent ){
 	Vector2D right_goal = Vector2D(52.5,-6);
 
 	if(left_goal.dist(ball_pos) < right_goal.dist(ball_pos)){
-		Body_SmartKick(left_goal,3,0.1,3).execute(agent);
+        Body_SmartKick(left_goal,3,0.1,2).execute(agent);
 	}else{
-		Body_SmartKick(right_goal,3,0.1,3).execute(agent);
+        Body_SmartKick(right_goal,3,0.1,2).execute(agent);
 	}
 	return true;
 }
@@ -131,14 +131,14 @@ bool Bhv_BasicOffensiveKick::pass(PlayerAgent * agent){
 	if(targets.size() == 0)
 		return false;
 	Vector2D best_target = targets[0];
-	for(int i=1;i<targets.size();i++){
+    for(unsigned int i=1;i<targets.size();i++){
 		if(targets[i].x > best_target.x)
 			best_target = targets[i];
 	}
 	if(wm.gameMode().type()!= GameMode::PlayOn)
-		Body_SmartKick(best_target,3,2.9,1).execute(agent);
+        Body_SmartKick(best_target,3,2.5,1).execute(agent);
 	else
-		Body_SmartKick(best_target,3,2.9,3).execute(agent);
+        Body_SmartKick(best_target,3,2.5,2).execute(agent);
 	return true;
 }
 

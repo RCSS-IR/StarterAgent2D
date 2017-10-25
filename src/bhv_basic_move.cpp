@@ -191,10 +191,6 @@ double Bhv_BasicMove::get_normal_dash_power( const WorldModel & wm )
                          wm.self().stamina() + wm.self().playerType().extraStamina() );
     }
 
-    const int self_min = wm.interceptTable()->selfReachCycle();
-    const int mate_min = wm.interceptTable()->teammateReachCycle();
-    const int opp_min = wm.interceptTable()->opponentReachCycle();
-
     // check recover
     if ( wm.self().staminaModel().capacityIsEmpty() )
     {

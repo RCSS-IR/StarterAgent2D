@@ -5,20 +5,11 @@ PLAYERSOURCES = \
 	bhv_basic_offensive_kick.cpp \
 	bhv_basic_tackle.cpp \
 	bhv_custom_before_kick_off.cpp \
-	bhv_go_to_static_ball.cpp \
 	bhv_goalie_basic_move.cpp \
 	bhv_goalie_free_kick.cpp \
-	bhv_prepare_set_play_kick.cpp \
 	bhv_set_play.cpp \
-	bhv_set_play_free_kick.cpp \
-	bhv_set_play_goal_kick.cpp \
-	bhv_set_play_indirect_free_kick.cpp \
-	bhv_set_play_kick_in.cpp \
-	bhv_set_play_kick_off.cpp \
-	bhv_their_goal_kick_move.cpp \
 	bhv_penalty_kick.cpp \
 	intention_receive.cpp \
-	intention_wait_after_set_play_kick.cpp \
 	sample_communication.cpp \
 	sample_player.cpp \
 	main_player.cpp
@@ -28,20 +19,11 @@ PLAYERHEADERS = \
 	bhv_basic_offensive_kick.h \
 	bhv_basic_tackle.h \
 	bhv_custom_before_kick_off.h \
-	bhv_go_to_static_ball.h \
 	bhv_goalie_basic_move.h \
 	bhv_goalie_free_kick.h \
-	bhv_prepare_set_play_kick.h \
 	bhv_set_play.h \
-	bhv_set_play_free_kick.h \
-	bhv_set_play_goal_kick.h \
-	bhv_set_play_indirect_free_kick.h \
-	bhv_set_play_kick_in.h \
-	bhv_set_play_kick_off.h \
-	bhv_their_goal_kick_move.h \
 	bhv_penalty_kick.h \
 	intention_receive.h \
-	intention_wait_after_set_play_kick.h \
 	communication.h \
 	sample_communication.h \
 	sample_player.h

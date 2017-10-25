@@ -792,7 +792,6 @@ TackleGenerator::predictOpponentsReachStep( const WorldModel & wm,
         int step = predictOpponentReachStep( *o,
                                              first_ball_pos,
                                              first_ball_vel,
-                                             ball_move_angle,
                                              min_step );
         if ( step < min_step )
         {
@@ -814,7 +813,6 @@ int
 TackleGenerator::predictOpponentReachStep( const AbstractPlayerObject * opponent,
                                            const Vector2D & first_ball_pos,
                                            const Vector2D & first_ball_vel,
-                                           const AngleDeg & ball_move_angle,
                                            const int max_cycle )
 {
     const ServerParam & SP = ServerParam::i();

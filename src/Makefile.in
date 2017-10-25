@@ -114,20 +114,11 @@ am__objects_2 = sample_player-bhv_basic_move.$(OBJEXT) \
 	sample_player-bhv_basic_offensive_kick.$(OBJEXT) \
 	sample_player-bhv_basic_tackle.$(OBJEXT) \
 	sample_player-bhv_custom_before_kick_off.$(OBJEXT) \
-	sample_player-bhv_go_to_static_ball.$(OBJEXT) \
 	sample_player-bhv_goalie_basic_move.$(OBJEXT) \
 	sample_player-bhv_goalie_free_kick.$(OBJEXT) \
-	sample_player-bhv_prepare_set_play_kick.$(OBJEXT) \
 	sample_player-bhv_set_play.$(OBJEXT) \
-	sample_player-bhv_set_play_free_kick.$(OBJEXT) \
-	sample_player-bhv_set_play_goal_kick.$(OBJEXT) \
-	sample_player-bhv_set_play_indirect_free_kick.$(OBJEXT) \
-	sample_player-bhv_set_play_kick_in.$(OBJEXT) \
-	sample_player-bhv_set_play_kick_off.$(OBJEXT) \
-	sample_player-bhv_their_goal_kick_move.$(OBJEXT) \
 	sample_player-bhv_penalty_kick.$(OBJEXT) \
 	sample_player-intention_receive.$(OBJEXT) \
-	sample_player-intention_wait_after_set_play_kick.$(OBJEXT) \
 	sample_player-sample_communication.$(OBJEXT) \
 	sample_player-sample_player.$(OBJEXT) \
 	sample_player-main_player.$(OBJEXT)
@@ -312,20 +303,11 @@ PLAYERSOURCES = \
 	bhv_basic_offensive_kick.cpp \
 	bhv_basic_tackle.cpp \
 	bhv_custom_before_kick_off.cpp \
-	bhv_go_to_static_ball.cpp \
 	bhv_goalie_basic_move.cpp \
 	bhv_goalie_free_kick.cpp \
-	bhv_prepare_set_play_kick.cpp \
 	bhv_set_play.cpp \
-	bhv_set_play_free_kick.cpp \
-	bhv_set_play_goal_kick.cpp \
-	bhv_set_play_indirect_free_kick.cpp \
-	bhv_set_play_kick_in.cpp \
-	bhv_set_play_kick_off.cpp \
-	bhv_their_goal_kick_move.cpp \
 	bhv_penalty_kick.cpp \
 	intention_receive.cpp \
-	intention_wait_after_set_play_kick.cpp \
 	sample_communication.cpp \
 	sample_player.cpp \
 	main_player.cpp
@@ -335,20 +317,11 @@ PLAYERHEADERS = \
 	bhv_basic_offensive_kick.h \
 	bhv_basic_tackle.h \
 	bhv_custom_before_kick_off.h \
-	bhv_go_to_static_ball.h \
 	bhv_goalie_basic_move.h \
 	bhv_goalie_free_kick.h \
-	bhv_prepare_set_play_kick.h \
 	bhv_set_play.h \
-	bhv_set_play_free_kick.h \
-	bhv_set_play_goal_kick.h \
-	bhv_set_play_indirect_free_kick.h \
-	bhv_set_play_kick_in.h \
-	bhv_set_play_kick_off.h \
-	bhv_their_goal_kick_move.h \
 	bhv_penalty_kick.h \
 	intention_receive.h \
-	intention_wait_after_set_play_kick.h \
 	communication.h \
 	sample_communication.h \
 	sample_player.h
@@ -475,20 +448,11 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-bhv_basic_offensive_kick.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-bhv_basic_tackle.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-bhv_custom_before_kick_off.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-bhv_go_to_static_ball.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-bhv_goalie_basic_move.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-bhv_goalie_free_kick.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-bhv_penalty_kick.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-bhv_prepare_set_play_kick.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-bhv_set_play.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-bhv_set_play_free_kick.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-bhv_set_play_goal_kick.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-bhv_set_play_indirect_free_kick.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-bhv_set_play_kick_in.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-bhv_set_play_kick_off.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-bhv_their_goal_kick_move.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-intention_receive.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-intention_wait_after_set_play_kick.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-main_player.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-sample_communication.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample_player-sample_player.Po@am__quote@
@@ -593,20 +557,6 @@ sample_player-bhv_custom_before_kick_off.obj: bhv_custom_before_kick_off.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-bhv_custom_before_kick_off.obj `if test -f 'bhv_custom_before_kick_off.cpp'; then $(CYGPATH_W) 'bhv_custom_before_kick_off.cpp'; else $(CYGPATH_W) '$(srcdir)/bhv_custom_before_kick_off.cpp'; fi`
 
-sample_player-bhv_go_to_static_ball.o: bhv_go_to_static_ball.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-bhv_go_to_static_ball.o -MD -MP -MF $(DEPDIR)/sample_player-bhv_go_to_static_ball.Tpo -c -o sample_player-bhv_go_to_static_ball.o `test -f 'bhv_go_to_static_ball.cpp' || echo '$(srcdir)/'`bhv_go_to_static_ball.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/sample_player-bhv_go_to_static_ball.Tpo $(DEPDIR)/sample_player-bhv_go_to_static_ball.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bhv_go_to_static_ball.cpp' object='sample_player-bhv_go_to_static_ball.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-bhv_go_to_static_ball.o `test -f 'bhv_go_to_static_ball.cpp' || echo '$(srcdir)/'`bhv_go_to_static_ball.cpp
-
-sample_player-bhv_go_to_static_ball.obj: bhv_go_to_static_ball.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-bhv_go_to_static_ball.obj -MD -MP -MF $(DEPDIR)/sample_player-bhv_go_to_static_ball.Tpo -c -o sample_player-bhv_go_to_static_ball.obj `if test -f 'bhv_go_to_static_ball.cpp'; then $(CYGPATH_W) 'bhv_go_to_static_ball.cpp'; else $(CYGPATH_W) '$(srcdir)/bhv_go_to_static_ball.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/sample_player-bhv_go_to_static_ball.Tpo $(DEPDIR)/sample_player-bhv_go_to_static_ball.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bhv_go_to_static_ball.cpp' object='sample_player-bhv_go_to_static_ball.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-bhv_go_to_static_ball.obj `if test -f 'bhv_go_to_static_ball.cpp'; then $(CYGPATH_W) 'bhv_go_to_static_ball.cpp'; else $(CYGPATH_W) '$(srcdir)/bhv_go_to_static_ball.cpp'; fi`
-
 sample_player-bhv_goalie_basic_move.o: bhv_goalie_basic_move.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-bhv_goalie_basic_move.o -MD -MP -MF $(DEPDIR)/sample_player-bhv_goalie_basic_move.Tpo -c -o sample_player-bhv_goalie_basic_move.o `test -f 'bhv_goalie_basic_move.cpp' || echo '$(srcdir)/'`bhv_goalie_basic_move.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/sample_player-bhv_goalie_basic_move.Tpo $(DEPDIR)/sample_player-bhv_goalie_basic_move.Po
@@ -635,20 +585,6 @@ sample_player-bhv_goalie_free_kick.obj: bhv_goalie_free_kick.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-bhv_goalie_free_kick.obj `if test -f 'bhv_goalie_free_kick.cpp'; then $(CYGPATH_W) 'bhv_goalie_free_kick.cpp'; else $(CYGPATH_W) '$(srcdir)/bhv_goalie_free_kick.cpp'; fi`
 
-sample_player-bhv_prepare_set_play_kick.o: bhv_prepare_set_play_kick.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-bhv_prepare_set_play_kick.o -MD -MP -MF $(DEPDIR)/sample_player-bhv_prepare_set_play_kick.Tpo -c -o sample_player-bhv_prepare_set_play_kick.o `test -f 'bhv_prepare_set_play_kick.cpp' || echo '$(srcdir)/'`bhv_prepare_set_play_kick.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/sample_player-bhv_prepare_set_play_kick.Tpo $(DEPDIR)/sample_player-bhv_prepare_set_play_kick.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bhv_prepare_set_play_kick.cpp' object='sample_player-bhv_prepare_set_play_kick.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-bhv_prepare_set_play_kick.o `test -f 'bhv_prepare_set_play_kick.cpp' || echo '$(srcdir)/'`bhv_prepare_set_play_kick.cpp
-
-sample_player-bhv_prepare_set_play_kick.obj: bhv_prepare_set_play_kick.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-bhv_prepare_set_play_kick.obj -MD -MP -MF $(DEPDIR)/sample_player-bhv_prepare_set_play_kick.Tpo -c -o sample_player-bhv_prepare_set_play_kick.obj `if test -f 'bhv_prepare_set_play_kick.cpp'; then $(CYGPATH_W) 'bhv_prepare_set_play_kick.cpp'; else $(CYGPATH_W) '$(srcdir)/bhv_prepare_set_play_kick.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/sample_player-bhv_prepare_set_play_kick.Tpo $(DEPDIR)/sample_player-bhv_prepare_set_play_kick.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bhv_prepare_set_play_kick.cpp' object='sample_player-bhv_prepare_set_play_kick.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-bhv_prepare_set_play_kick.obj `if test -f 'bhv_prepare_set_play_kick.cpp'; then $(CYGPATH_W) 'bhv_prepare_set_play_kick.cpp'; else $(CYGPATH_W) '$(srcdir)/bhv_prepare_set_play_kick.cpp'; fi`
-
 sample_player-bhv_set_play.o: bhv_set_play.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-bhv_set_play.o -MD -MP -MF $(DEPDIR)/sample_player-bhv_set_play.Tpo -c -o sample_player-bhv_set_play.o `test -f 'bhv_set_play.cpp' || echo '$(srcdir)/'`bhv_set_play.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/sample_player-bhv_set_play.Tpo $(DEPDIR)/sample_player-bhv_set_play.Po
@@ -662,90 +598,6 @@ sample_player-bhv_set_play.obj: bhv_set_play.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bhv_set_play.cpp' object='sample_player-bhv_set_play.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-bhv_set_play.obj `if test -f 'bhv_set_play.cpp'; then $(CYGPATH_W) 'bhv_set_play.cpp'; else $(CYGPATH_W) '$(srcdir)/bhv_set_play.cpp'; fi`
-
-sample_player-bhv_set_play_free_kick.o: bhv_set_play_free_kick.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-bhv_set_play_free_kick.o -MD -MP -MF $(DEPDIR)/sample_player-bhv_set_play_free_kick.Tpo -c -o sample_player-bhv_set_play_free_kick.o `test -f 'bhv_set_play_free_kick.cpp' || echo '$(srcdir)/'`bhv_set_play_free_kick.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/sample_player-bhv_set_play_free_kick.Tpo $(DEPDIR)/sample_player-bhv_set_play_free_kick.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bhv_set_play_free_kick.cpp' object='sample_player-bhv_set_play_free_kick.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-bhv_set_play_free_kick.o `test -f 'bhv_set_play_free_kick.cpp' || echo '$(srcdir)/'`bhv_set_play_free_kick.cpp
-
-sample_player-bhv_set_play_free_kick.obj: bhv_set_play_free_kick.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-bhv_set_play_free_kick.obj -MD -MP -MF $(DEPDIR)/sample_player-bhv_set_play_free_kick.Tpo -c -o sample_player-bhv_set_play_free_kick.obj `if test -f 'bhv_set_play_free_kick.cpp'; then $(CYGPATH_W) 'bhv_set_play_free_kick.cpp'; else $(CYGPATH_W) '$(srcdir)/bhv_set_play_free_kick.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/sample_player-bhv_set_play_free_kick.Tpo $(DEPDIR)/sample_player-bhv_set_play_free_kick.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bhv_set_play_free_kick.cpp' object='sample_player-bhv_set_play_free_kick.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-bhv_set_play_free_kick.obj `if test -f 'bhv_set_play_free_kick.cpp'; then $(CYGPATH_W) 'bhv_set_play_free_kick.cpp'; else $(CYGPATH_W) '$(srcdir)/bhv_set_play_free_kick.cpp'; fi`
-
-sample_player-bhv_set_play_goal_kick.o: bhv_set_play_goal_kick.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-bhv_set_play_goal_kick.o -MD -MP -MF $(DEPDIR)/sample_player-bhv_set_play_goal_kick.Tpo -c -o sample_player-bhv_set_play_goal_kick.o `test -f 'bhv_set_play_goal_kick.cpp' || echo '$(srcdir)/'`bhv_set_play_goal_kick.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/sample_player-bhv_set_play_goal_kick.Tpo $(DEPDIR)/sample_player-bhv_set_play_goal_kick.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bhv_set_play_goal_kick.cpp' object='sample_player-bhv_set_play_goal_kick.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-bhv_set_play_goal_kick.o `test -f 'bhv_set_play_goal_kick.cpp' || echo '$(srcdir)/'`bhv_set_play_goal_kick.cpp
-
-sample_player-bhv_set_play_goal_kick.obj: bhv_set_play_goal_kick.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-bhv_set_play_goal_kick.obj -MD -MP -MF $(DEPDIR)/sample_player-bhv_set_play_goal_kick.Tpo -c -o sample_player-bhv_set_play_goal_kick.obj `if test -f 'bhv_set_play_goal_kick.cpp'; then $(CYGPATH_W) 'bhv_set_play_goal_kick.cpp'; else $(CYGPATH_W) '$(srcdir)/bhv_set_play_goal_kick.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/sample_player-bhv_set_play_goal_kick.Tpo $(DEPDIR)/sample_player-bhv_set_play_goal_kick.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bhv_set_play_goal_kick.cpp' object='sample_player-bhv_set_play_goal_kick.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-bhv_set_play_goal_kick.obj `if test -f 'bhv_set_play_goal_kick.cpp'; then $(CYGPATH_W) 'bhv_set_play_goal_kick.cpp'; else $(CYGPATH_W) '$(srcdir)/bhv_set_play_goal_kick.cpp'; fi`
-
-sample_player-bhv_set_play_indirect_free_kick.o: bhv_set_play_indirect_free_kick.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-bhv_set_play_indirect_free_kick.o -MD -MP -MF $(DEPDIR)/sample_player-bhv_set_play_indirect_free_kick.Tpo -c -o sample_player-bhv_set_play_indirect_free_kick.o `test -f 'bhv_set_play_indirect_free_kick.cpp' || echo '$(srcdir)/'`bhv_set_play_indirect_free_kick.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/sample_player-bhv_set_play_indirect_free_kick.Tpo $(DEPDIR)/sample_player-bhv_set_play_indirect_free_kick.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bhv_set_play_indirect_free_kick.cpp' object='sample_player-bhv_set_play_indirect_free_kick.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-bhv_set_play_indirect_free_kick.o `test -f 'bhv_set_play_indirect_free_kick.cpp' || echo '$(srcdir)/'`bhv_set_play_indirect_free_kick.cpp
-
-sample_player-bhv_set_play_indirect_free_kick.obj: bhv_set_play_indirect_free_kick.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-bhv_set_play_indirect_free_kick.obj -MD -MP -MF $(DEPDIR)/sample_player-bhv_set_play_indirect_free_kick.Tpo -c -o sample_player-bhv_set_play_indirect_free_kick.obj `if test -f 'bhv_set_play_indirect_free_kick.cpp'; then $(CYGPATH_W) 'bhv_set_play_indirect_free_kick.cpp'; else $(CYGPATH_W) '$(srcdir)/bhv_set_play_indirect_free_kick.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/sample_player-bhv_set_play_indirect_free_kick.Tpo $(DEPDIR)/sample_player-bhv_set_play_indirect_free_kick.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bhv_set_play_indirect_free_kick.cpp' object='sample_player-bhv_set_play_indirect_free_kick.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-bhv_set_play_indirect_free_kick.obj `if test -f 'bhv_set_play_indirect_free_kick.cpp'; then $(CYGPATH_W) 'bhv_set_play_indirect_free_kick.cpp'; else $(CYGPATH_W) '$(srcdir)/bhv_set_play_indirect_free_kick.cpp'; fi`
-
-sample_player-bhv_set_play_kick_in.o: bhv_set_play_kick_in.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-bhv_set_play_kick_in.o -MD -MP -MF $(DEPDIR)/sample_player-bhv_set_play_kick_in.Tpo -c -o sample_player-bhv_set_play_kick_in.o `test -f 'bhv_set_play_kick_in.cpp' || echo '$(srcdir)/'`bhv_set_play_kick_in.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/sample_player-bhv_set_play_kick_in.Tpo $(DEPDIR)/sample_player-bhv_set_play_kick_in.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bhv_set_play_kick_in.cpp' object='sample_player-bhv_set_play_kick_in.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-bhv_set_play_kick_in.o `test -f 'bhv_set_play_kick_in.cpp' || echo '$(srcdir)/'`bhv_set_play_kick_in.cpp
-
-sample_player-bhv_set_play_kick_in.obj: bhv_set_play_kick_in.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-bhv_set_play_kick_in.obj -MD -MP -MF $(DEPDIR)/sample_player-bhv_set_play_kick_in.Tpo -c -o sample_player-bhv_set_play_kick_in.obj `if test -f 'bhv_set_play_kick_in.cpp'; then $(CYGPATH_W) 'bhv_set_play_kick_in.cpp'; else $(CYGPATH_W) '$(srcdir)/bhv_set_play_kick_in.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/sample_player-bhv_set_play_kick_in.Tpo $(DEPDIR)/sample_player-bhv_set_play_kick_in.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bhv_set_play_kick_in.cpp' object='sample_player-bhv_set_play_kick_in.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-bhv_set_play_kick_in.obj `if test -f 'bhv_set_play_kick_in.cpp'; then $(CYGPATH_W) 'bhv_set_play_kick_in.cpp'; else $(CYGPATH_W) '$(srcdir)/bhv_set_play_kick_in.cpp'; fi`
-
-sample_player-bhv_set_play_kick_off.o: bhv_set_play_kick_off.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-bhv_set_play_kick_off.o -MD -MP -MF $(DEPDIR)/sample_player-bhv_set_play_kick_off.Tpo -c -o sample_player-bhv_set_play_kick_off.o `test -f 'bhv_set_play_kick_off.cpp' || echo '$(srcdir)/'`bhv_set_play_kick_off.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/sample_player-bhv_set_play_kick_off.Tpo $(DEPDIR)/sample_player-bhv_set_play_kick_off.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bhv_set_play_kick_off.cpp' object='sample_player-bhv_set_play_kick_off.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-bhv_set_play_kick_off.o `test -f 'bhv_set_play_kick_off.cpp' || echo '$(srcdir)/'`bhv_set_play_kick_off.cpp
-
-sample_player-bhv_set_play_kick_off.obj: bhv_set_play_kick_off.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-bhv_set_play_kick_off.obj -MD -MP -MF $(DEPDIR)/sample_player-bhv_set_play_kick_off.Tpo -c -o sample_player-bhv_set_play_kick_off.obj `if test -f 'bhv_set_play_kick_off.cpp'; then $(CYGPATH_W) 'bhv_set_play_kick_off.cpp'; else $(CYGPATH_W) '$(srcdir)/bhv_set_play_kick_off.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/sample_player-bhv_set_play_kick_off.Tpo $(DEPDIR)/sample_player-bhv_set_play_kick_off.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bhv_set_play_kick_off.cpp' object='sample_player-bhv_set_play_kick_off.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-bhv_set_play_kick_off.obj `if test -f 'bhv_set_play_kick_off.cpp'; then $(CYGPATH_W) 'bhv_set_play_kick_off.cpp'; else $(CYGPATH_W) '$(srcdir)/bhv_set_play_kick_off.cpp'; fi`
-
-sample_player-bhv_their_goal_kick_move.o: bhv_their_goal_kick_move.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-bhv_their_goal_kick_move.o -MD -MP -MF $(DEPDIR)/sample_player-bhv_their_goal_kick_move.Tpo -c -o sample_player-bhv_their_goal_kick_move.o `test -f 'bhv_their_goal_kick_move.cpp' || echo '$(srcdir)/'`bhv_their_goal_kick_move.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/sample_player-bhv_their_goal_kick_move.Tpo $(DEPDIR)/sample_player-bhv_their_goal_kick_move.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bhv_their_goal_kick_move.cpp' object='sample_player-bhv_their_goal_kick_move.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-bhv_their_goal_kick_move.o `test -f 'bhv_their_goal_kick_move.cpp' || echo '$(srcdir)/'`bhv_their_goal_kick_move.cpp
-
-sample_player-bhv_their_goal_kick_move.obj: bhv_their_goal_kick_move.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-bhv_their_goal_kick_move.obj -MD -MP -MF $(DEPDIR)/sample_player-bhv_their_goal_kick_move.Tpo -c -o sample_player-bhv_their_goal_kick_move.obj `if test -f 'bhv_their_goal_kick_move.cpp'; then $(CYGPATH_W) 'bhv_their_goal_kick_move.cpp'; else $(CYGPATH_W) '$(srcdir)/bhv_their_goal_kick_move.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/sample_player-bhv_their_goal_kick_move.Tpo $(DEPDIR)/sample_player-bhv_their_goal_kick_move.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bhv_their_goal_kick_move.cpp' object='sample_player-bhv_their_goal_kick_move.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-bhv_their_goal_kick_move.obj `if test -f 'bhv_their_goal_kick_move.cpp'; then $(CYGPATH_W) 'bhv_their_goal_kick_move.cpp'; else $(CYGPATH_W) '$(srcdir)/bhv_their_goal_kick_move.cpp'; fi`
 
 sample_player-bhv_penalty_kick.o: bhv_penalty_kick.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-bhv_penalty_kick.o -MD -MP -MF $(DEPDIR)/sample_player-bhv_penalty_kick.Tpo -c -o sample_player-bhv_penalty_kick.o `test -f 'bhv_penalty_kick.cpp' || echo '$(srcdir)/'`bhv_penalty_kick.cpp
@@ -774,20 +626,6 @@ sample_player-intention_receive.obj: intention_receive.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='intention_receive.cpp' object='sample_player-intention_receive.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-intention_receive.obj `if test -f 'intention_receive.cpp'; then $(CYGPATH_W) 'intention_receive.cpp'; else $(CYGPATH_W) '$(srcdir)/intention_receive.cpp'; fi`
-
-sample_player-intention_wait_after_set_play_kick.o: intention_wait_after_set_play_kick.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-intention_wait_after_set_play_kick.o -MD -MP -MF $(DEPDIR)/sample_player-intention_wait_after_set_play_kick.Tpo -c -o sample_player-intention_wait_after_set_play_kick.o `test -f 'intention_wait_after_set_play_kick.cpp' || echo '$(srcdir)/'`intention_wait_after_set_play_kick.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/sample_player-intention_wait_after_set_play_kick.Tpo $(DEPDIR)/sample_player-intention_wait_after_set_play_kick.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='intention_wait_after_set_play_kick.cpp' object='sample_player-intention_wait_after_set_play_kick.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-intention_wait_after_set_play_kick.o `test -f 'intention_wait_after_set_play_kick.cpp' || echo '$(srcdir)/'`intention_wait_after_set_play_kick.cpp
-
-sample_player-intention_wait_after_set_play_kick.obj: intention_wait_after_set_play_kick.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-intention_wait_after_set_play_kick.obj -MD -MP -MF $(DEPDIR)/sample_player-intention_wait_after_set_play_kick.Tpo -c -o sample_player-intention_wait_after_set_play_kick.obj `if test -f 'intention_wait_after_set_play_kick.cpp'; then $(CYGPATH_W) 'intention_wait_after_set_play_kick.cpp'; else $(CYGPATH_W) '$(srcdir)/intention_wait_after_set_play_kick.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/sample_player-intention_wait_after_set_play_kick.Tpo $(DEPDIR)/sample_player-intention_wait_after_set_play_kick.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='intention_wait_after_set_play_kick.cpp' object='sample_player-intention_wait_after_set_play_kick.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -c -o sample_player-intention_wait_after_set_play_kick.obj `if test -f 'intention_wait_after_set_play_kick.cpp'; then $(CYGPATH_W) 'intention_wait_after_set_play_kick.cpp'; else $(CYGPATH_W) '$(srcdir)/intention_wait_after_set_play_kick.cpp'; fi`
 
 sample_player-sample_communication.o: sample_communication.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sample_player_CXXFLAGS) $(CXXFLAGS) -MT sample_player-sample_communication.o -MD -MP -MF $(DEPDIR)/sample_player-sample_communication.Tpo -c -o sample_player-sample_communication.o `test -f 'sample_communication.cpp' || echo '$(srcdir)/'`sample_communication.cpp

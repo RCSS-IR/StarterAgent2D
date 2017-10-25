@@ -28,6 +28,7 @@
 #define BHV_SET_PLAY_H
 
 #include <rcsc/geom/vector_2d.h>
+#include <rcsc/geom/circle_2d.h>
 #include <rcsc/player/soccer_action.h>
 
 namespace rcsc {
@@ -43,11 +44,11 @@ public:
     bool execute( rcsc::PlayerAgent * agent );
     void doMove( rcsc::PlayerAgent * agent );
     void doKick( rcsc::PlayerAgent * agent );
-
+    bool doKickWait( rcsc::PlayerAgent * agent );
     static
     rcsc::Vector2D get_avoid_circle_point( const rcsc::WorldModel & world,
                                            const rcsc::Vector2D & target_point );
-
+    static bool GoToStaticBall( rcsc::PlayerAgent * agent, const rcsc::AngleDeg & ball_place_angle );
     static
     double get_set_play_dash_power( const rcsc::PlayerAgent * agent );
 
@@ -56,9 +57,10 @@ public:
 
     static
     bool is_delaying_tactics_situation( const rcsc::PlayerAgent * agent );
-
-private:
-    void doBasicTheirSetPlayMove( rcsc::PlayerAgent * agent );
+    static bool can_go_to( const int count,
+               const rcsc::WorldModel & wm,
+               const rcsc::Circle2D & ball_circle,
+               const rcsc::Vector2D & target_point );
 
 };
 
