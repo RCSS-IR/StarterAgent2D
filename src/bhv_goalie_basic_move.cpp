@@ -37,7 +37,7 @@
 #include <rcsc/action/body_turn_to_point.h>
 #include <rcsc/action/body_stop_dash.h>
 #include <rcsc/action/bhv_go_to_point_look_ball.h>
-
+#include <rcsc/action/body_intercept.h>
 #include <rcsc/player/player_agent.h>
 #include <rcsc/player/intercept_table.h>
 #include <rcsc/player/debug_client.h>
@@ -56,6 +56,11 @@ using namespace rcsc;
 bool
 Bhv_GoalieBasicMove::execute( PlayerAgent * agent )
 {
+    const WorldModel & wm = agent->world();
+    int self_min = wm.interceptTable()->selfReachCycle();
+    int mate_min = wm.interceptTable()->teammateReachCycle();
+    int opp_min = wm.interceptTable()->opponentReachCycle();
+
     const Vector2D move_point = getTargetPoint( agent );
 
     dlog.addText( Logger::TEAM,
@@ -71,6 +76,10 @@ Bhv_GoalieBasicMove::execute( PlayerAgent * agent )
         return true;
     }
 
+    if (self_min < opp_min && self_min < mate_min){
+        Body_Intercept2009().execute(agent);
+        return true;
+    }
     if (!Body_GoToPoint2010(move_point,1.0,100).execute(agent))
         Body_TurnToPoint(move_point).execute(agent);
 
