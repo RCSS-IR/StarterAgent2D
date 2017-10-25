@@ -68,6 +68,149 @@ using namespace rcsc;
 /*!
 
  */
+
+void
+Bhv_SetPlay::doMove( PlayerAgent * agent )
+{
+    const WorldModel & wm = agent->world();
+
+    Vector2D target_point = Bhv_BasicMove().getPosition( wm, wm.self().unum() );
+    if(target_point.x > wm.offsideLineX())
+        target_point= wm.offsideLineX() - 1.0;
+    double dash_power = Bhv_SetPlay::get_set_play_dash_power( agent );
+
+    double dist_thr = wm.ball().distFromSelf() * 0.07;
+    if ( dist_thr < 1.0 ) dist_thr = 1.0;
+
+    agent->debugClient().addMessage( "KickInMove" );
+    agent->debugClient().setTarget( target_point );
+
+    if ( ! Body_GoToPoint( target_point,
+                           dist_thr,
+                           dash_power
+                           ).execute( agent ) )
+    {
+            Body_TurnToBall().execute( agent );
+    }
+
+}
+void
+Bhv_SetPlay::doKick( PlayerAgent * agent )
+{
+    const WorldModel & wm = agent->world();
+
+    //
+    // go to the kick position
+    //
+    AngleDeg ball_place_angle = ( wm.ball().pos().y > 0.0
+                                  ? -90.0
+                                  : 90.0 );
+    if ( Bhv_GoToStaticBall( ball_place_angle ).execute( agent ) )
+    {
+        return;
+    }
+
+    //
+    // wait
+    //
+
+    if ( doKickWait( agent ) )
+    {
+        return;
+    }
+
+    //
+    // kick
+    //
+
+    const double max_ball_speed = wm.self().kickRate() * ServerParam::i().maxPower();
+
+    //
+    // pass
+    //
+
+    if(Bhv_BasicOffensiveKick().pass(agent)){
+          return;
+    }
+    //
+    // kick to the nearest teammate
+    //
+    {
+        const PlayerObject * receiver = wm.getTeammateNearestToBall( 10 );
+        if ( receiver
+             && receiver->distFromBall() < 10.0
+             && receiver->pos().absX() < ServerParam::i().pitchHalfLength()
+             && receiver->pos().absY() < ServerParam::i().pitchHalfWidth() )
+        {
+            Vector2D target_point = receiver->inertiaFinalPoint();
+            target_point.x += 0.5;
+
+            double ball_move_dist = wm.ball().pos().dist( target_point );
+            int ball_reach_step
+                = ball_move_dist / 2.5;
+            double ball_speed = 0.0;
+            if ( ball_reach_step > 3 )
+            {
+                ball_speed = 2.5;
+            }
+            else
+            {
+                ball_speed = 1.5;
+            }
+
+            agent->debugClient().addMessage( "KickIn:ForcePass%.3f", ball_speed );
+            agent->debugClient().setTarget( target_point );
+
+            dlog.addText( Logger::TEAM,
+                          __FILE__":  kick to nearest teammate (%.1f %.1f) speed=%.2f",
+                          target_point.x, target_point.y,
+                          ball_speed );
+            Body_KickOneStep( target_point,
+                              ball_speed
+                              ).execute( agent );
+            return;
+        }
+    }
+
+    //
+    // turn to ball
+    //
+
+    if ( ( wm.ball().angleFromSelf() - wm.self().body() ).abs() > 1.5 )
+    {
+        agent->debugClient().addMessage( "KickIn:Advance:TurnToBall" );
+        dlog.addText( Logger::TEAM,
+                      __FILE__":  clear. turn to ball" );
+
+        Body_TurnToBall().execute( agent );
+        return;
+    }
+
+
+    //
+    // kick to the opponent side corner
+    //
+    {
+        agent->debugClient().addMessage( "KickIn:ForceAdvance" );
+
+        Vector2D target_point( ServerParam::i().pitchHalfLength() - 2.0,
+                               ( ServerParam::i().pitchHalfWidth() - 5.0 )
+                               * ( 1.0 - ( wm.self().pos().x
+                                           / ServerParam::i().pitchHalfLength() ) ) );
+        if ( wm.self().pos().y < 0.0 )
+        {
+            target_point.y *= -1.0;
+        }
+        // enforce one step kick
+        dlog.addText( Logger::TEAM,
+                      __FILE__": advance(2) to (%.1f, %.1f)",
+                      target_point.x, target_point.y );
+        Body_KickOneStep( target_point,
+                          ServerParam::i().ballSpeedMax()
+                          ).execute( agent );
+    }
+}
+
 bool
 Bhv_SetPlay::execute( PlayerAgent * agent )
 {
@@ -75,7 +218,6 @@ Bhv_SetPlay::execute( PlayerAgent * agent )
                   __FILE__": Bhv_SetPlay" );
 
     const WorldModel & wm = agent->world();
-
     if ( wm.self().goalie() )
     {
         if ( wm.gameMode().type() != GameMode::BackPass_
@@ -91,71 +233,82 @@ Bhv_SetPlay::execute( PlayerAgent * agent )
         return true;
     }
 
-    switch ( wm.gameMode().type() ) {
-    case GameMode::KickOff_:
-        if ( wm.gameMode().side() == wm.ourSide() )
-        {
-            return Bhv_SetPlayKickOff().execute( agent );
+    if ( wm.gameMode().side() == wm.ourSide() ){
+        if (is_kicker(agent)){
+            doKick(agent);
+        }else{
+            doMove(agent);
         }
-        else
-        {
-            doBasicTheirSetPlayMove( agent );
-            return true;
-        }
-        break;
-    case GameMode::KickIn_:
-    case GameMode::CornerKick_:
-        if ( wm.gameMode().side() == wm.ourSide() )
-        {
-            return Bhv_SetPlayKickIn().execute( agent );
-        }
-        else
-        {
-            doBasicTheirSetPlayMove( agent );
-            return true;
-        }
-        break;
-    case GameMode::GoalKick_:
-        if ( wm.gameMode().side() == wm.ourSide() )
-        {
-            return Bhv_SetPlayGoalKick().execute( agent );
-        }
-        else
-        {
-            return Bhv_TheirGoalKickMove().execute( agent );
-        }
-        break;
-    case GameMode::BackPass_:
-    case GameMode::IndFreeKick_:
-    case GameMode::FoulCharge_:
-    case GameMode::FoulPush_:
-        return Bhv_SetPlayIndirectFreeKick().execute( agent );
-        break;
-#if 0
-    case GameMode::FreeKick_:
-    case GameMode::CornerKick_:
-    case GameMode::GoalieCatch_: // after catch
-    case GameMode::Offside_:
-    case GameMode::FreeKickFault_:
-    case GameMode::CatchFault_:
-#endif
-    default:
-        break;
+    }else{
+        doMove(agent);
     }
+    return true;
 
-    if ( wm.gameMode().isOurSetPlay( wm.ourSide() ) )
-    {
-        dlog.addText( Logger::TEAM,
-                      __FILE__": our set play" );
-        return Bhv_SetPlayFreeKick().execute( agent );
-    }
-    else
-    {
-        doBasicTheirSetPlayMove( agent );
-        return true;
-    }
+//    switch ( wm.gameMode().type() ) {
+//    case GameMode::KickOff_:
+//        if ( wm.gameMode().side() == wm.ourSide() )
+//        {
+//            return Bhv_SetPlayKickOff().execute( agent );
+//        }
+//        else
+//        {
+//            doBasicTheirSetPlayMove( agent );
+//            return true;
+//        }
+//        break;
+//    case GameMode::KickIn_:
+//    case GameMode::CornerKick_:
+//        if ( wm.gameMode().side() == wm.ourSide() )
+//        {
+//            return Bhv_SetPlayKickIn().execute( agent );
+//        }
+//        else
+//        {
+//            doBasicTheirSetPlayMove( agent );
+//            return true;
+//        }
+//        break;
+//    case GameMode::GoalKick_:
+//        if ( wm.gameMode().side() == wm.ourSide() )
+//        {
+//            return Bhv_SetPlayGoalKick().execute( agent );
+//        }
+//        else
+//        {
+//            return Bhv_TheirGoalKickMove().execute( agent );
+//        }
+//        break;
+//    case GameMode::BackPass_:
+//    case GameMode::IndFreeKick_:
+//    case GameMode::FoulCharge_:
+//    case GameMode::FoulPush_:
+//        return Bhv_SetPlayIndirectFreeKick().execute( agent );
+//        break;
+//#if 0
+//    case GameMode::FreeKick_:
+//    case GameMode::CornerKick_:
+//    case GameMode::GoalieCatch_: // after catch
+//    case GameMode::Offside_:
+//    case GameMode::FreeKickFault_:
+//    case GameMode::CatchFault_:
+//#endif
+//    default:
+//        break;
+//    }
 
-    return false;
+//    if ( wm.gameMode().isOurSetPlay( wm.ourSide() ) )
+//    {
+//        dlog.addText( Logger::TEAM,
+//                      __FILE__": our set play" );
+//        return Bhv_SetPlayFreeKick().execute( agent );
+//    }
+//    else
+//    {
+//        doBasicTheirSetPlayMove( agent );
+//        return true;
+//    }
+
+//    return false;
 }
 
 /*-------------------------------------------------------------------*/

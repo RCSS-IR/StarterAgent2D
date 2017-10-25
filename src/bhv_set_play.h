@@ -41,6 +41,8 @@ public:
       { }
 
     bool execute( rcsc::PlayerAgent * agent );
+    void doMove( rcsc::PlayerAgent * agent );
+    void doKick( rcsc::PlayerAgent * agent );
 
     static
     rcsc::Vector2D get_avoid_circle_point( const rcsc::WorldModel & world,
