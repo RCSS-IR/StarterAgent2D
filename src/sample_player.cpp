@@ -21,7 +21,9 @@
 
  *EndCopyright:
  */
-
+//Student Soccer Simulation 2D Base , STDAGENT2D
+//Technical Commitee of Soccer Simulation 2D League, IranOpen
+//Nader Zare
 /////////////////////////////////////////////////////////////////////
 
 #ifdef HAVE_CONFIG_H
