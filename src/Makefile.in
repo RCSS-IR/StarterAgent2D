@@ -371,7 +371,7 @@ noinst_HEADERS = \
 	$(COACHHEADERS) \
 	$(TRAINERHEADERS)
 
-AM_CPPFLAGS = -I$(top_srcdir)/src  -I$(top_srcdir)/src/chain_action
+AM_CPPFLAGS = -I$(top_srcdir)/src 
 AM_CFLAGS = -W -Wall
 AM_CXXFLAGS = -W -Wall
 AM_LDLAGS = 

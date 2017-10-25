@@ -45,85 +45,7 @@ class WorldModel;
   \class TackleGenerator
   \brief tackle/foul generator
  */
-class TackleGenerator {
-public:
 
-    struct TackleResult {
-        rcsc::AngleDeg tackle_angle_; //!< global angle
-        rcsc::Vector2D ball_vel_; //!< result ball velocity
-        double ball_speed_;
-        rcsc::AngleDeg ball_move_angle_;
-        double score_;
-
-        TackleResult();
-        TackleResult( const rcsc::AngleDeg & angle,
-                      const rcsc::Vector2D & vel );
-        void clear();
-    };
-
-    typedef std::vector< TackleResult > Container;
-
-
-private:
-
-    //! candidate container
-    Container M_candidates;
-
-    //! best tackle result
-    TackleResult M_best_result;
-
-    // private for singleton
-    TackleGenerator();
-
-    // not used
-    TackleGenerator( const TackleGenerator & );
-    const TackleGenerator & operator=( const TackleGenerator & );
-public:
-
-    static
-    TackleGenerator & instance();
-
-    void generate( const rcsc::WorldModel & wm );
-
-
-    const Container & candidates( const rcsc::WorldModel & wm )
-      {
-          generate( wm );
-          return M_candidates;
-      }
-
-    const TackleResult & bestResult( const rcsc::WorldModel & wm )
-      {
-          generate( wm );
-          return M_best_result;
-      }
-
-private:
-
-    void clear();
-
-    void calculate( const rcsc::WorldModel & wm );
-    double evaluate( const rcsc::WorldModel & wm,
-                     const TackleResult & result );
-
-    int predictOpponentsReachStep( const rcsc::WorldModel & wm,
-                                   const rcsc::Vector2D & first_ball_pos,
-                                   const rcsc::Vector2D & first_ball_vel,
-                                   const rcsc::AngleDeg & ball_move_angle );
-    int predictOpponentReachStep( const rcsc::AbstractPlayerObject * opponent,
-                                  const rcsc::Vector2D & first_ball_pos,
-                                  const rcsc::Vector2D & first_ball_vel,
-                                  const int max_cycle );
-    static
-    int predict_player_turn_cycle( const rcsc::PlayerType * player_type,
-                                   const rcsc::AngleDeg & player_body,
-                                   const double & player_speed,
-                                   const double & target_dist,
-                                   const rcsc::AngleDeg & target_angle,
-                                   const double & dist_thr,
-                                   const bool use_back_dash );
-
-};
 #include <rcsc/player/soccer_action.h>
 
 class Bhv_BasicTackle
@@ -142,8 +64,7 @@ public:
 
 private:
 
-    bool executeV14( rcsc::PlayerAgent * agent,
-                     const bool use_foul );
+    bool executeV14( rcsc::PlayerAgent * agent);
 };
 
 #endif
