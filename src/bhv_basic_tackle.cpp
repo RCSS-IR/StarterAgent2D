@@ -118,9 +118,11 @@ Bhv_BasicTackle::execute( PlayerAgent * agent )
     {
         // try tackle
 
-    double tackle_dir = 0.0;
+        double tackle_dir = 0.0;
 
         agent->doTackle( tackle_dir, use_foul );
+
+        return true;
     }
     else
     {
@@ -128,10 +130,6 @@ Bhv_BasicTackle::execute( PlayerAgent * agent )
                       __FILE__": Bhv_BasicTackle. not necessary" );
         return false;
     }
-
-
+    return false;
 
 }
-
-
-
