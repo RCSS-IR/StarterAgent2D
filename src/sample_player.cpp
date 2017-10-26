@@ -21,9 +21,14 @@
 
  *EndCopyright:
  */
-//Student Soccer Simulation 2D Base , STDAGENT2D
-//Technical Commitee of Soccer Simulation 2D League, IranOpen
+
+//Student Soccer 2D Simulation Base , STDAGENT2D
+//Simplified the Agent2D Base for HighSchool Students.
+//Technical Committee of Soccer 2D Simulation League, IranOpen
 //Nader Zare
+//Mostafa Sayahi
+//Pooria Kaviani
+
 /////////////////////////////////////////////////////////////////////
 
 #ifdef HAVE_CONFIG_H

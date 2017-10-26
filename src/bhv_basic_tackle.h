@@ -62,9 +62,6 @@ public:
 
     bool execute( rcsc::PlayerAgent * agent );
 
-private:
-
-    bool executeV14( rcsc::PlayerAgent * agent);
 };
 
 #endif
