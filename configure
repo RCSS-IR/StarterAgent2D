@@ -4691,16 +4691,15 @@ LDFLAGS="$LDFLAGS $BOOST_LDFLAGS"
 # check librcsc path
 
 LIBRCSCLIB="/usr/local/lib"
-librcsc_prefix="/usr/local/stdlib"
+librcsc_prefix="/usr/local/stdlib/lib"
 
 # Check whether --with-librcsc was given.
 if test "${with_librcsc+set}" = set; then :
   withval=$with_librcsc; librcsc_prefix="$withval"
-#else
-  #librcsc_prefix=""
 fi
 
 if test x$librcsc_prefix != x; then
+  echo "nader"
   CPPFLAGS="$CPPFLAGS -I$librcsc_prefix/include"
   LDFLAGS="$LDFLAGS -L$librcsc_prefix/lib"
   LIBRCSCLIB="$librcsc_prefix/lib"
