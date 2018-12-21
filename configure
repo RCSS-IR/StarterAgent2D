@@ -4691,7 +4691,7 @@ LDFLAGS="$LDFLAGS $BOOST_LDFLAGS"
 # check librcsc path
 
 LIBRCSCLIB="/usr/local/lib"
-librcsc_prefix="/usr/local/stdlib/lib"
+librcsc_prefix="/usr/local/StarterLibRCSC"
 
 # Check whether --with-librcsc was given.
 if test "${with_librcsc+set}" = set; then :
@@ -4703,6 +4703,9 @@ if test x$librcsc_prefix != x; then
   CPPFLAGS="$CPPFLAGS -I$librcsc_prefix/include"
   LDFLAGS="$LDFLAGS -L$librcsc_prefix/lib"
   LIBRCSCLIB="$librcsc_prefix/lib"
+  echo $CPPFLAGS
+  echo $LDFLAGS
+  echo $LIBRCSCLIB
 else
   for librcsc_path_tmp in $HOME $HOME/local $HOME/rcss /opt/robocup /opt /opt/local ; do
     if test -d "$librcsc_path_tmp/include/rcsc" && test -r "$librcsc_path_tmp/include/rcsc/types.h" ; then
