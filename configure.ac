@@ -28,12 +28,13 @@ LDFLAGS="$LDFLAGS $BOOST_LDFLAGS"
 
 # check librcsc path
 AC_SUBST(LIBRCSCLIB)
-LIBRCSCLIB="/usr/local/lib"
-librcsc_prefix=""
+LIBRCSCLIB="/usr/local/StarterLibRCSC/lib"
+librcsc_prefix="/usr/local/StarterLibRCSC"
 AC_ARG_WITH(librcsc,
             [  --with-librcsc=PREFIX prefix where librcsc is installed (optional)],
             librcsc_prefix="$withval",
             librcsc_prefix="")
+librcsc_prefix="/usr/local/StarterLibRCSC"
 if test x$librcsc_prefix != x; then
   CPPFLAGS="$CPPFLAGS -I$librcsc_prefix/include"
   LDFLAGS="$LDFLAGS -L$librcsc_prefix/lib"
