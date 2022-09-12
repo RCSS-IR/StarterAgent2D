@@ -184,6 +184,18 @@ rcsc::Vector2D Bhv_BasicMove::getPosition(const rcsc::WorldModel & wm, int self_
             }
         }
     }
+ 
+    // Fix kick off bug
+    if(wm.gameMode().type() == GameMode::KickOff_) {
+       for ( int unum = 1; unum <= 11; ++unum )
+           {
+               if ( positions[unum].x > -1 )
+               {
+                   positions[unum].x = -1;
+               }
+           }
+    }
+ 
     return positions.at(self_unum);
 }
 
